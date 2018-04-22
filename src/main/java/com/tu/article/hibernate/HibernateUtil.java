@@ -7,6 +7,10 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
+import com.sun.mail.imap.protocol.Status;
+import com.tu.article.entity.Role;
+import com.tu.article.entity.User;
+
 public class HibernateUtil {
 
 	private static SessionFactory sessionFactory;
@@ -17,7 +21,9 @@ public class HibernateUtil {
 		MetadataSources metadataSources = new MetadataSources();
 		config.configure();
 		builder.applySettings(config.getProperties());
-		// metadataSources.addAnnotatedClass(User.class);
+		metadataSources.addAnnotatedClass(User.class);
+		metadataSources.addAnnotatedClass(Role.class);
+		metadataSources.addAnnotatedClass(Status.class);
 		Metadata metadata = metadataSources.buildMetadata(builder.build());
 		sessionFactory = metadata.buildSessionFactory();
 	}
