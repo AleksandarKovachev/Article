@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.thymeleaf.org http://www.thymeleaf.org">
+
+<div th:fragment="header">
+	<div class="navbar-fixed">
+		<nav class="blue lighten-1" role="navigation">
+			<div class="nav-wrapper container">
+				<a id="logo-container" th:href="@{/}" class="brand-logo"
+					th:text="#{logo}"></a>
+				<ul class="right hide-on-med-and-down">
+					<li><a href="#!" th:text="#{menu.articles}"></a></li>
+					<li sec:authorize="isAnonymous()">
+						<a th:href="@{/login}" th:text="#{login.title}"></a>
+					</li>
+				</ul>
+				<a href="#" data-activates="nav-mobile"
+					class="button-collapse fakelink"><i
+					class="material-icons navColorFix" th:text="#{menu.mobile}"></i></a>
+			</div>
+		</nav>
+	</div>
+
+	<ul id="nav-mobile" class="side-nav">
+		<li><a class="fakelink truncate" th:text="#{menu.home}"></a></li>
+		<li><a class="fakelink truncate" href="#!"
+			th:text="#{menu.articles}"></a></li>
+		<li sec:authorize="isAnonymous()">
+			<a th:href="@{/login}" th:text="#{login.title}"></a>
+		</li>
+	</ul>
+</div>
+</html>
