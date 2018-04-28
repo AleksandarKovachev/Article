@@ -59,7 +59,7 @@ public class User {
 	@Column(name = EntityConstants.MODIFY_DATE)
 	private Date modifyDate;
 
-	@Column(name = EntityConstants.USER_DEGREE_COLUMN)
+	@Column(name = EntityConstants.USER_IS_CONFIRMED)
 	private Integer isConfirmed;
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
