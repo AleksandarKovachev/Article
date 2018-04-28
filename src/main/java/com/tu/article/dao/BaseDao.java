@@ -5,8 +5,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
-import com.tu.article.hibernate.HibernateUtil;
-
 /**
  * A class defining base DAO stuffs
  * 
@@ -14,8 +12,6 @@ import com.tu.article.hibernate.HibernateUtil;
  *
  */
 public class BaseDao {
-
-	protected Session session = HibernateUtil.getSession();
 
 	@Autowired
 	@Qualifier("sessionFactory")
