@@ -10,11 +10,19 @@
 
 		<!-- Show executed SQL to the console -->
 		<property name="show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
 
 		<!-- UTF8 -->
 		<property name="hibernate.connection.CharSet">utf8</property>
 		<property name="hibernate.connection.characterEncoding">utf8</property>
 		<property name="hibernate.connection.useUnicode">true</property>
+		
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.use_query_cache">true</property>
+		
+		<property name="hibernate.enable_lazy_load_no_trans">true</property>
+		
+		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory</property>
 
 	</session-factory>
 </hibernate-configuration>
