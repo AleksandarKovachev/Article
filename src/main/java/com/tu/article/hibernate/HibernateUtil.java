@@ -11,6 +11,12 @@ import com.sun.mail.imap.protocol.Status;
 import com.tu.article.entity.Role;
 import com.tu.article.entity.User;
 
+/**
+ * Class for Hibernate configuration.
+ * 
+ * @author aleksandar.kovachev
+ *
+ */
 public class HibernateUtil {
 
 	private static SessionFactory sessionFactory;

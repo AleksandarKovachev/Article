@@ -28,6 +28,14 @@
 			invalid-session-url="/login"></security:session-management>
 	</security:http>
 
+	<bean id="userDetailsService" class="com.tu.article.security.UserDetailsServiceImpl" />
+
+	<security:authentication-manager>
+		<security:authentication-provider
+			user-service-ref="userDetailsService">
+		</security:authentication-provider>
+	</security:authentication-manager>
+
 	<security:global-method-security
 		secured-annotations="enabled" />
 
