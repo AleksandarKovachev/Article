@@ -10,18 +10,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Home controller for working with the /index context
+ * Login controller for defining the login logic
  * 
  * @author aleksandar.kovachev
  *
  */
 @Controller
-public class HomeController {
+public class LoginController {
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView account(HttpServletRequest request, HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
-		return new ModelAndView("index", modelMap);
+		return new ModelAndView("login", modelMap);
 	}
 
 }
