@@ -2,6 +2,7 @@ package com.tu.article.dao.impl;
 
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tu.article.dao.BaseDao;
 import com.tu.article.dao.UserDao;
@@ -15,6 +16,7 @@ import com.tu.article.entity.User;
  *
  */
 @Repository
+@Transactional
 public class UserDaoImpl extends BaseDao implements UserDao {
 
 	@Override

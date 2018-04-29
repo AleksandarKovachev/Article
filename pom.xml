@@ -4,8 +4,9 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ARTICLE</groupId>
 	<artifactId>ARTICLE</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<name>ARTICLE</name>
 	<packaging>war</packaging>
+	<version>0.0.1-SNAPSHOT</version>
 
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -31,6 +32,8 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<deployment-name>ARTICLE</deployment-name>
+		<war-name>ARTICLE</war-name>
 		<spring.version>5.0.5.RELEASE</spring.version>
 		<spring-security.version>5.0.4.RELEASE</spring-security.version>
 		<thymeleaf.version>3.0.1.RELEASE</thymeleaf.version>
@@ -39,6 +42,7 @@
 		<jackson.version>2.9.0</jackson.version>
 		<lombok.version>1.16.20</lombok.version>
 		<fileupload.version>1.3.3</fileupload.version>
+		<javax.version>4.0.1</javax.version>
 	</properties>
 
 	<dependencies>
@@ -67,7 +71,7 @@
 			<artifactId>spring-tx</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
@@ -115,7 +119,7 @@
 			<artifactId>thymeleaf-layout-dialect</artifactId>
 			<version>${thymeleaf.layout.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
@@ -127,7 +131,7 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-ehcache</artifactId>
@@ -163,6 +167,13 @@
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>${fileupload.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 	</dependencies>
