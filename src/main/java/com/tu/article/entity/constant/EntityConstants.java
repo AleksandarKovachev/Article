@@ -35,4 +35,8 @@ public class EntityConstants {
 	public static final String USER_ROLES_TABLE_NAME = "USER_ROLES";
 	public static final String USER_ID_COLUMN_NAME = "USER_ID";
 
+	// Degree
+	public static final String DEGREE_TABLE_NAME = "DEGREE";
+	public static final String DEGREE_ID = "DEGREE_ID";
+
 }

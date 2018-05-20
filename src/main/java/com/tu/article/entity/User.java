@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.tu.article.entity.constant.EntityConstants;
@@ -39,7 +40,7 @@ public class User {
 	private String username;
 
 	@Column(name = EntityConstants.USER_PASSWORD_COLUMN)
-	private String password;
+	private byte[] password;
 
 	@Column(name = EntityConstants.USER_EMAIL_COLUMN)
 	private String email;
@@ -50,8 +51,9 @@ public class User {
 	@Column(name = EntityConstants.USER_ORGANIZATION_COLUMN)
 	private String organization;
 
-	@Column(name = EntityConstants.USER_DEGREE_COLUMN)
-	private String degree;
+	@ManyToOne
+	@JoinColumn(name = EntityConstants.DEGREE_ID)
+	private Degree degree;
 
 	@Column(name = EntityConstants.CREATE_DATE)
 	private Date createDate;
@@ -61,6 +63,10 @@ public class User {
 
 	@Column(name = EntityConstants.USER_IS_CONFIRMED)
 	private Integer isConfirmed;
+
+	@ManyToOne
+	@JoinColumn(name = EntityConstants.STATUS_ID)
+	private Status status;
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinTable(name = EntityConstants.USER_ROLES_TABLE_NAME, joinColumns = {
