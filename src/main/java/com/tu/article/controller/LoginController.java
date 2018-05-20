@@ -5,9 +5,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.tu.article.controller.constant.ViewConstant;
 
 /**
  * Login controller for defining the login logic
@@ -18,10 +20,11 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class LoginController {
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@GetMapping
+	@RequestMapping(value = "/login")
 	public ModelAndView account(HttpServletRequest request, HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
-		return new ModelAndView("login", modelMap);
+		return new ModelAndView(ViewConstant.LOGIN, modelMap);
 	}
 
 }

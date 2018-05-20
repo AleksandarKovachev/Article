@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/MaterializeLayout}">
+<head>
+<title th:text="#{register.title}"></title>
+</head>
+<body>
+	<section layout:fragment="body">
+		<div class="center">
+			<h1 th:text="#{register.title}"></h1>
+
+			<div class="container">
+				<form th:action="@{/register}" method="POST" th:object="${form}"
+					class="col s12">
+
+					<div th:replace="fragments/Messages :: messages"></div>
+
+					<div class='row'>
+						<div class='input-field col s12'>
+							<i class="material-icons prefix">person_outline</i>
+							<input class='validate' type='text' name='username' id='username'
+								th:field="*{username}" />
+							<label for='username' th:text="#{input.username}"></label>
+						</div>
+					</div>
+
+					<div class='row'>
+						<div class='input-field col s12'>
+							<i class="material-icons prefix">lock_outline</i>
+							<input class='validate' type='password' name='password'
+								id='password' th:field="*{password}" />
+							<label for='password' th:text="#{input.password}"></label>
+						</div>
+					</div>
+
+					<div class='row'>
+						<div class='input-field col s12'>
+							<i class="material-icons prefix">mail_outline</i>
+							<input class="validate" required aria-required="true"
+								type='email' name='email' id='email' th:field="*{email}" />
+							<label for='email' th:text="#{register.email}"></label>
+						</div>
+					</div>
+
+					<div class='row'>
+						<div class='input-field col s12'>
+							<i class="material-icons prefix">person_outline</i>
+							<input class="validate" required aria-required="true" type='text'
+								name='name' id='name' th:field="*{name}" />
+							<label for='name' th:text="#{register.name}"></label>
+						</div>
+					</div>
+
+					<div class='row'>
+						<div class="input-field col s12">
+							<i class="material-icons prefix">school</i>
+							<select required aria-required="true" id="degreeSelect"
+								th:field="*{degree}">
+								<option value="-1" disabled selected th:text="#{choose}" />
+								<option th:each="degree : ${degrees}" th:value="${degree.id}"
+									th:text="${degree.name}"></option>
+							</select>
+							<label th:text="#{register.degree}"></label>
+						</div>
+					</div>
+
+					<br />
+					<div class='row'>
+						<button type='submit'
+							class='col s12 btn btn-large waves-effect indigo'
+							th:text="#{register.title}"></button>
+					</div>
+				</form>
+				<p><a th:href="@{/login}" th:text="#{login.title}"></a></p>
+			</div>
+		</div>
+	</section>
+</body>
+</html>

@@ -14,11 +14,11 @@ public class UserDetailsImpl implements UserDetails {
 	private boolean credentialsNonExpired;
 	private boolean enabled;
 	private String username;
-	private String password;
+	private byte[] password;
 	private Long id;
 	private Collection<GrantedAuthority> authorities;
 
-	public UserDetailsImpl(String username, String password, Long id, Collection<GrantedAuthority> authorities) {
+	public UserDetailsImpl(String username, byte[] password, Long id, Collection<GrantedAuthority> authorities) {
 		this.enabled = true;
 		this.accountNonExpired = true;
 		this.credentialsNonExpired = true;
@@ -76,10 +76,10 @@ public class UserDetailsImpl implements UserDetails {
 
 	@Override
 	public String getPassword() {
-		return password;
+		return password.toString();
 	}
 
-	public void setPassword(String password) {
+	public void setPassword(byte[] password) {
 		this.password = password;
 	}
 
