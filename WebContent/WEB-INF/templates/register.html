@@ -52,12 +52,19 @@
 							<label for='name' th:text="#{register.name}"></label>
 						</div>
 					</div>
+					
+					<div class='row'>
+						<div class='input-field col s12'>
+							<i class="material-icons prefix">people_outline</i>
+							<input class="validate" required aria-required="true" type='text'
+								name='organization' id='organization' th:field="*{organization}" />
+							<label for='organization' th:text="#{register.organization}"></label>
+						</div>
+					</div>
 
 					<div class='row'>
 						<div class="input-field col s12">
-							<i class="material-icons prefix">school</i>
-							<select required aria-required="true" id="degreeSelect"
-								th:field="*{degree}">
+							<select th:field="*{degree}">
 								<option value="-1" disabled selected th:text="#{choose}" />
 								<option th:each="degree : ${degrees}" th:value="${degree.id}"
 									th:text="${degree.name}"></option>

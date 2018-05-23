@@ -14,5 +14,11 @@
 			<br>
 		</th:block>
 	</div>
+
+	<div th:if="${message != null && !message.isEmpty()}"
+		class="row alert success">
+		<span class="closebtn">&times;</span>
+		<span th:text="${message}"></span>
+	</div>
 </div>
 </html>
