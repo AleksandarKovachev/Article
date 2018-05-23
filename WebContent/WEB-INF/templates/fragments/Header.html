@@ -11,26 +11,24 @@
 			<div class="nav-wrapper container">
 				<a id="logo-container" th:href="@{/}" class="brand-logo"
 					th:text="#{logo}"></a>
+				<a href="#" data-target="nav-mobile" class="sidenav-trigger">
+					<i class="material-icons">menu</i>
+				</a>
 				<ul class="right hide-on-med-and-down">
 					<li><a href="#!" th:text="#{menu.articles}"></a></li>
-					<li sec:authorize="isAnonymous()">
-						<a th:href="@{/login}" th:text="#{login.title}"></a>
-					</li>
+					<li sec:authorize="isAnonymous()"><a th:href="@{/login}"
+							th:text="#{login.title}"></a></li>
 				</ul>
-				<a href="#" data-activates="nav-mobile"
-					class="button-collapse fakelink"><i
-					class="material-icons navColorFix" th:text="#{menu.mobile}"></i></a>
 			</div>
 		</nav>
 	</div>
 
-	<ul id="nav-mobile" class="side-nav">
+	<ul class="sidenav" id="nav-mobile">
 		<li><a class="fakelink truncate" th:text="#{menu.home}"></a></li>
 		<li><a class="fakelink truncate" href="#!"
-			th:text="#{menu.articles}"></a></li>
-		<li sec:authorize="isAnonymous()">
-			<a th:href="@{/login}" th:text="#{login.title}"></a>
-		</li>
+				th:text="#{menu.articles}"></a></li>
+		<li sec:authorize="isAnonymous()"><a th:href="@{/login}"
+				th:text="#{login.title}"></a></li>
 	</ul>
 </div>
 </html>
