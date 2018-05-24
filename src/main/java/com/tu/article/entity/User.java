@@ -40,7 +40,7 @@ public class User {
 	private String username;
 
 	@Column(name = EntityConstants.USER_PASSWORD_COLUMN)
-	private byte[] password;
+	private String password;
 
 	@Column(name = EntityConstants.USER_EMAIL_COLUMN)
 	private String email;

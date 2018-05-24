@@ -65,7 +65,7 @@ public class RegisterController {
 		} else {
 			User user = new User();
 			user.setUsername(userForm.getUsername());
-			user.setPassword(passwordEncoder.encode(userForm.getPassword()).getBytes());
+			user.setPassword(passwordEncoder.encode(userForm.getPassword()));
 			user.setEmail(userForm.getEmail());
 			user.setName(userForm.getName());
 			user.setOrganization(userForm.getOrganization());
