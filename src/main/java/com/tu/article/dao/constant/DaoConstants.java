@@ -9,6 +9,9 @@ package com.tu.article.dao.constant;
 public class DaoConstants {
 
 	// Common
+	public static final String STATUS = "status";
+	public static final String USER_ID = "userId";
+	public static final String NAME = "name";
 
 	// User
 	public static final String USERNAME = "username";

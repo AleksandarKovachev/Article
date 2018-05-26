@@ -70,7 +70,7 @@ public class User {
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinTable(name = EntityConstants.USER_ROLES_TABLE_NAME, joinColumns = {
-			@JoinColumn(name = EntityConstants.USER_ID_COLUMN_NAME) }, inverseJoinColumns = {
+			@JoinColumn(name = EntityConstants.USER_ID) }, inverseJoinColumns = {
 					@JoinColumn(name = EntityConstants.ROLE_ID_COLUMN_NAME) })
 	private Set<Role> roles;
 

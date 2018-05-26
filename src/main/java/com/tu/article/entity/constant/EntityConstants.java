@@ -16,6 +16,7 @@ public class EntityConstants {
 	public static final String CREATE_DATE = "CREATE_DATE";
 	public static final String MODIFY_DATE = "MODIFY_DATE";
 	public static final String STATUS_ID = "STATUS_ID";
+	public static final String USER_ID = "USER_ID";
 
 	// Status
 	public static final String STATUS_TABLE_NAME = "STATUS";
@@ -33,10 +34,16 @@ public class EntityConstants {
 	public static final String USER_DEGREE_COLUMN = "DEGREE";
 	public static final String USER_IS_CONFIRMED = "IS_CONFIRMED";
 	public static final String USER_ROLES_TABLE_NAME = "USER_ROLES";
-	public static final String USER_ID_COLUMN_NAME = "USER_ID";
 
 	// Degree
 	public static final String DEGREE_TABLE_NAME = "DEGREE";
 	public static final String DEGREE_ID = "DEGREE_ID";
+
+	// Image
+	public static final String IMAGE_TABLE_NAME = "IMAGE";
+
+	// Parameter
+	public static final String PARAMETER_TABLE_NAME = "PARAMETER";
+	public static final String PARAMETER_VALUE_COLUMN = "VALUE";
 
 }
