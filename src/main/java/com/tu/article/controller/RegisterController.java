@@ -1,6 +1,8 @@
 package com.tu.article.controller;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +21,9 @@ import com.tu.article.constant.Constant;
 import com.tu.article.controller.constant.RequestAttribute;
 import com.tu.article.controller.constant.ViewConstant;
 import com.tu.article.entity.Degree;
+import com.tu.article.entity.Role;
 import com.tu.article.entity.User;
+import com.tu.article.entity.constant.RoleEnum;
 import com.tu.article.form.UserForm;
 import com.tu.article.service.DatabaseManagerService;
 import com.tu.article.service.DegreeService;
@@ -73,6 +77,10 @@ public class RegisterController {
 			user.setStatus(databaseManager.getActiveStatus());
 			user.setIsConfirmed(0);
 			user.setDegree((Degree) databaseManager.getObjectById(Degree.class, Long.valueOf(userForm.getDegree())));
+			Role role = (Role) databaseManager.getObjectById(Role.class, RoleEnum.ROLE_USER.getRoleId());
+			Set<Role> roles = new HashSet<>();
+			roles.add(role);
+			user.setRoles(roles);
 			databaseManager.addObject(user);
 
 			modelMap.addAttribute(RequestAttribute.MESSAGE, "Успешна регистрация.");
