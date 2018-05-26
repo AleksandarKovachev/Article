@@ -16,4 +16,8 @@ public class RequestAttribute {
 
 	public static final String MESSAGE = "message";
 
+	public static final String USERNAME = "username";
+
+	public static final String USER = "user";
+
 }

@@ -12,4 +12,6 @@ public class ViewConstant {
 
 	public static final String REGISTER = "register";
 
+	public static final String ACCOUNT = "account";
+
 }
