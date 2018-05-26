@@ -4,16 +4,9 @@ $(document).ready(
 			$('.parallax').parallax();
 			$('select').formSelect();
 			$('.modal').modal();
-			$(".dropdown-button").dropdown();
-
-			$('.dropdown-button2').dropdown({
-				inDuration : 300,
-				outDuration : 225,
-				constrain_width : false,
-				hover : true,
-				gutter : ($('.dropdown-content').width() * 3) / 2.5 + 5,
-				belowOrigin : true,
-				alignment : 'left'
+			$(".dropdown-trigger").dropdown({
+				constrainWidth : false,
+				coverTrigger : false
 			});
 
 			$("select[required]").css({

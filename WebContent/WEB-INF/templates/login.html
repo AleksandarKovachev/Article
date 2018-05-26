@@ -12,43 +12,39 @@
 			<h1 th:text="#{login.title}"></h1>
 
 			<div class="container">
-				<div class="z-depth-5 grey lighten-4 row"
-					style="display: inline-block; padding: 32px 48px 0px 48px; border: 1px solid #EEE;">
-					<form th:action="@{/login}" method="POST" class="col s12">
+				<form th:action="@{/login}" method="POST" class="col s12">
 
-						<div th:if="${param.error != null}" class="row alert"
-							th:classappend="error">
-							<span class="closebtn">&times;</span>
-							<span th:text="#{login.error}"></span>
-						</div>
+					<div th:if="${param.error != null}" class="row alert"
+						th:classappend="error">
+						<span class="closebtn">&times;</span>
+						<span th:text="#{login.error}"></span>
+					</div>
 
-						<div class='row'>
-							<div class='input-field col s12'>
-								<i class="material-icons prefix">person_outline</i>
-								<input class='validate' type='text' name='username'
-									id='username' />
-								<label for='username' th:text="#{input.username}"></label>
-							</div>
+					<div class='row'>
+						<div class='input-field col s12'>
+							<i class="material-icons prefix">person_outline</i>
+							<input class='validate' type='text' name='username' id='username' />
+							<label for='username' th:text="#{input.username}"></label>
 						</div>
+					</div>
 
-						<div class='row'>
-							<div class='input-field col s12'>
-								<i class="material-icons prefix">lock_outline</i>
-								<input class='validate' type='password' name='password'
-									id='password' />
-								<label for='password' th:text="#{input.password}"></label>
-							</div>
+					<div class='row'>
+						<div class='input-field col s12'>
+							<i class="material-icons prefix">lock_outline</i>
+							<input class='validate' type='password' name='password'
+								id='password' />
+							<label for='password' th:text="#{input.password}"></label>
 						</div>
+					</div>
 
-						<br />
-						<div class='row'>
-							<button type='submit'
-								class='col s12 btn btn-large waves-effect indigo'
-								th:text="#{login.title}"></button>
-						</div>
-					</form>
-					<p><a th:href="@{/register}" th:text="#{create.account}"></a></p>
-				</div>
+					<br />
+					<div class='row'>
+						<button type='submit'
+							class='col s12 btn btn-large waves-effect indigo'
+							th:text="#{login.title}"></button>
+					</div>
+				</form>
+				<p><a th:href="@{/register}" th:text="#{create.account}"></a></p>
 			</div>
 		</div>
 	</section>

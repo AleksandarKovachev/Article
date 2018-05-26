@@ -10,14 +10,17 @@
 		<nav class="blue lighten-1" role="navigation">
 			<div class="nav-wrapper container">
 				<a id="logo-container" th:href="@{/}" class="brand-logo"
-					th:text="#{logo}"></a>
-				<a href="#" data-target="nav-mobile" class="sidenav-trigger">
-					<i class="material-icons">menu</i>
+					th:text="#{logo}"></a> <a href="#" data-target="nav-mobile"
+					class="sidenav-trigger"> <i class="material-icons">menu</i>
 				</a>
 				<ul class="right hide-on-med-and-down">
 					<li><a href="#!" th:text="#{menu.articles}"></a></li>
+					<li sec:authorize="isAuthenticated()"><a
+						class="dropdown-trigger" href="#!" data-target="account_dropdown"
+						th:inline="text">[[#{menu.account}]] <i
+								class="material-icons right">arrow_drop_down</i></a></li>
 					<li sec:authorize="isAnonymous()"><a th:href="@{/login}"
-							th:text="#{login.title}"></a></li>
+						th:text="#{login.title}"></a></li>
 				</ul>
 			</div>
 		</nav>
@@ -26,9 +29,25 @@
 	<ul class="sidenav" id="nav-mobile">
 		<li><a class="fakelink truncate" th:text="#{menu.home}"></a></li>
 		<li><a class="fakelink truncate" href="#!"
-				th:text="#{menu.articles}"></a></li>
+			th:text="#{menu.articles}"></a></li>
+		<li sec:authorize="isAuthenticated()"><a class="dropdown-trigger"
+			href="#!" data-target="account_dropdown_mobile" th:inline="text">[[#{menu.account}]]
+				<i class="material-icons right">arrow_drop_down</i>
+		</a></li>
 		<li sec:authorize="isAnonymous()"><a th:href="@{/login}"
-				th:text="#{login.title}"></a></li>
+			th:text="#{login.title}"></a></li>
+	</ul>
+
+	<ul id='account_dropdown' class='dropdown-content'>
+		<li><a th:href="@{|/${#authentication.name}|}"
+			th:text="#{menu.my.account}"></a></li>
+		<li><a th:href="@{/logout}" th:text="#{menu.logout}"></a></li>
+	</ul>
+
+	<ul id='account_dropdown_mobile' class='dropdown-content'>
+		<li><a th:href="@{|/${#authentication.name}|}"
+			th:text="#{menu.my.account}"></a></li>
+		<li><a th:href="@{/logout}" th:text="#{menu.logout}"></a></li>
 	</ul>
 </div>
 </html>
