@@ -12,6 +12,41 @@
 			<div class="container">
 				<div th:replace="fragments/Messages :: messages"></div>
 
+				<div th:if="${message == null}">
+					<div class="row valign-wrapper">
+						<div class="col s6 m6">
+							<div class="card">
+								<div class="card-image">
+									<img th:src="${image}">
+									<span class="card-title" th:text="${user.username}"></span>
+									<a
+										class="btn-floating halfway-fab waves-effect waves-light red"><i
+										class="material-icons">add</i></a>
+								</div>
+								<div class="card-content">
+									<p th:text="${user.name}"></p>
+								</div>
+							</div>
+						</div>
+						<div class="col s6 m6">
+							<span th:text="#{account.name}"></span>
+							<strong th:text="${user.name}"></strong>
+							<br>
+							<span th:text="#{account.email}"></span>
+							<strong th:text="${user.email}"></strong>
+							<br>
+							<span th:text="#{account.organization}"></span>
+							<strong th:text="${user.organization}"></strong>
+							<br>
+							<span th:text="#{account.degree}"></span>
+							<strong th:text="${user.degree.name}"></strong>
+							<br>
+							<span th:text="#{account.role}"></span>
+							<strong th:each="role : ${user.roles}" th:text="${role.name}"></strong>
+							<br>
+						</div>
+					</div>
+				</div>
 
 			</div>
 		</div>
