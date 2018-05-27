@@ -27,6 +27,8 @@
 			access="permitAll" />
 		<security:intercept-url pattern="/images/**"
 			access="permitAll" />
+		<security:intercept-url pattern="/users/**"
+			access="hasRole('ROLE_ADMINISTRATOR')" />
 		<security:logout
 			logout-success-url="/login?logout=true" invalidate-session="true"
 			delete-cookies="JSESSIONID" />

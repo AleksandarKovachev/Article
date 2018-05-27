@@ -14,4 +14,6 @@ public class ViewConstant {
 
 	public static final String ACCOUNT = "account";
 
+	public static final String USERS = "users";
+
 }
