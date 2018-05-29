@@ -7,6 +7,54 @@
 <title th:text="#{menu.users}"></title>
 </head>
 <body>
-	<section layout:fragment="body"></section>
+	<section layout:fragment="body">
+
+		<table class="striped highlight centered responsive-table">
+			<thead>
+				<tr>
+					<th th:text="#{user.number}"></th>
+					<th th:text="#{user.username}"></th>
+					<th th:text="#{user.email}"></th>
+					<th th:text="#{user.name}"></th>
+					<th th:text="#{user.organization}"></th>
+					<th th:text="#{user.degree}"></th>
+					<th th:text="#{user.isConfirmed}"></th>
+					<th th:text="#{user.status}"></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<th:block th:each="user, iteration : ${users}">
+					<tr>
+						<td
+							th:text="${iteration.index + (filter.pageNumber*filter.pageSize)+1}"></td>
+						<td th:text="${user.username}"></td>
+						<td th:text="${user.email}"></td>
+						<td th:text="${user.name}"></td>
+						<td th:text="${user.organization}"></td>
+						<td th:text="${user.degree.name}"></td>
+						<td
+							th:text="${user.isConfirmed == 1} ? #{user.confirmed} : #{user.notConfirmed}"></td>
+						<td th:text="${user.status.name}"></td>
+					</tr>
+			</tbody>
+		</table>
+
+
+		<ul class="pagination">
+			<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+			<li class="active"><a href="#!">1</a></li>
+			<li class="waves-effect"><a href="#!">2</a></li>
+			<li class="waves-effect"><a href="#!">3</a></li>
+			<li class="waves-effect"><a href="#!">4</a></li>
+			<li class="waves-effect"><a href="#!">5</a></li>
+			<li class="waves-effect"><a href="#!"><i
+					class="material-icons">chevron_right</i></a></li>
+		</ul>
+
+
+
+
+	</section>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.tu.article.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
@@ -8,6 +10,7 @@ import com.tu.article.dao.UserDao;
 import com.tu.article.dao.constant.DaoConstants;
 import com.tu.article.entity.Status;
 import com.tu.article.entity.User;
+import com.tu.article.filter.BasePageFilter;
 
 /**
  * DAO class for working with {@link User} entity
@@ -26,6 +29,14 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		query.setParameter(DaoConstants.USERNAME, username);
 		query.setParameter(DaoConstants.STATUS, Status.ACTIVE_STATUS);
 		return query.uniqueResult();
+	}
+
+	@Override
+	public List<User> getUsers(BasePageFilter filter) {
+		Query<User> query = getSession().createQuery("from User", User.class);
+		query.setFirstResult(filter.getPageNumber() * filter.getPageSize());
+		query.setMaxResults(filter.getPageSize());
+		return query.list();
 	}
 
 }

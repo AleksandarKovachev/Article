@@ -1,11 +1,14 @@
 package com.tu.article.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tu.article.dao.UserDao;
 import com.tu.article.entity.User;
+import com.tu.article.filter.BasePageFilter;
 import com.tu.article.service.UserService;
 
 /**
@@ -25,6 +28,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User getActiveUserByUsername(String username) {
 		return userDao.getActiveUserByUsername(username);
+	}
+
+	@Override
+	public List<User> getUsers(BasePageFilter filter) {
+		return userDao.getUsers(filter);
 	}
 
 }

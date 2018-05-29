@@ -22,4 +22,8 @@ public class RequestAttribute {
 
 	public static final String IMAGE = "image";
 
+	public static final String USERS = "users";
+
+	public static final String FILTER = "filter";
+
 }
