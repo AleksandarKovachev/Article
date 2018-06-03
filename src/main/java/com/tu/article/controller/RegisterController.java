@@ -1,8 +1,6 @@
 package com.tu.article.controller;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -78,9 +76,7 @@ public class RegisterController {
 			user.setIsConfirmed(0);
 			user.setDegree((Degree) databaseManager.getObjectById(Degree.class, Long.valueOf(userForm.getDegree())));
 			Role role = (Role) databaseManager.getObjectById(Role.class, RoleEnum.ROLE_USER.getRoleId());
-			Set<Role> roles = new HashSet<>();
-			roles.add(role);
-			user.setRoles(roles);
+			user.setRole(role);
 			databaseManager.addObject(user);
 
 			modelMap.addAttribute(RequestAttribute.MESSAGE, "Успешна регистрация.");

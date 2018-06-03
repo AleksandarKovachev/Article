@@ -1,18 +1,13 @@
 package com.tu.article.entity;
 
 import java.util.Date;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -68,10 +63,8 @@ public class User {
 	@JoinColumn(name = EntityConstants.STATUS_ID)
 	private Status status;
 
-	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
-	@JoinTable(name = EntityConstants.USER_ROLES_TABLE_NAME, joinColumns = {
-			@JoinColumn(name = EntityConstants.USER_ID) }, inverseJoinColumns = {
-					@JoinColumn(name = EntityConstants.ROLE_ID_COLUMN_NAME) })
-	private Set<Role> roles;
+	@ManyToOne
+	@JoinColumn(name = EntityConstants.ROLE_ID_COLUMN_NAME)
+	private Role role;
 
 }

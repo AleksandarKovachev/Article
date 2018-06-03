@@ -19,7 +19,9 @@
 					<th th:text="#{user.organization}"></th>
 					<th th:text="#{user.degree}"></th>
 					<th th:text="#{user.isConfirmed}"></th>
+					<th th:text="#{user.role}"></th>
 					<th th:text="#{user.status}"></th>
+					<th th:text="#{user.action}"></th>
 				</tr>
 			</thead>
 
@@ -35,7 +37,10 @@
 						<td th:text="${user.degree.name}"></td>
 						<td
 							th:text="${user.isConfirmed == 1} ? #{user.confirmed} : #{user.notConfirmed}"></td>
+						<td th:text="${user.role.name}"></td>
 						<td th:text="${user.status.name}"></td>
+						<td><a class="waves-effect waves-light btn-small disabled"
+							th:text="#{user.save.button}"></a></td>
 					</tr>
 			</tbody>
 		</table>

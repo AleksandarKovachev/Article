@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import com.tu.article.entity.Role;
 import com.tu.article.entity.User;
 import com.tu.article.service.UserService;
 
@@ -34,10 +33,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
 		List<GrantedAuthority> authorities = new ArrayList<>();
 
-		for (Role role : user.getRoles()) {
-			SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(role.getCode());
-			authorities.add(simpleGrantedAuthority);
-		}
+		SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(user.getRole().getCode());
+		authorities.add(simpleGrantedAuthority);
 
 		return new UserDetailsImpl(user.getUsername(), user.getPassword(), user.getId(),
 				authorities);
