@@ -37,10 +37,23 @@
 						<td th:text="${user.degree.name}"></td>
 						<td
 							th:text="${user.isConfirmed == 1} ? #{user.confirmed} : #{user.notConfirmed}"></td>
-						<td th:text="${user.role.name}"></td>
-						<td th:text="${user.status.name}"></td>
-						<td><a class="waves-effect waves-light btn-small disabled"
-							th:text="#{user.save.button}"></a></td>
+						<td width="230px"><select th:id="'userRole_' + ${user.id}"
+								th:onchange="'javascript:changeUser(value, \'' + ${user.role.id} + '\' , \'' + ${user.id} + '\', true);'">
+								<option value="-1" disabled selected th:text="#{choose}" />
+								<option th:each="role : ${roles}" th:value="${role.id}"
+									th:text="${role.name}" th:selected="${user.role.id == role.id}"></option>
+							</select></td>
+						<td><select th:id="'userStatus_' + ${user.id}"
+								th:onchange="'javascript:changeUser(value, \'' + ${user.status.id} + '\' , \'' + ${user.id} + '\', false);'">
+								<option value="-1" disabled selected th:text="#{choose}" />
+								<option th:each="status : ${statuses}" th:value="${status.id}"
+									th:text="${status.name}"
+									th:selected="${user.status.id == status.id}"></option>
+							</select></td>
+						<td><a th:id="'saveButton_' + ${user.id}"
+							class="waves-effect waves-light btn-small disabled"
+							th:text="#{user.save.button}"
+							th:onclick="'javascript:updateUser(\'' + ${user.id} + '\');'"></a></td>
 					</tr>
 			</tbody>
 		</table>
@@ -59,7 +72,54 @@
 
 
 
+		<script type="text/javascript">
+			var roleValue;
+			var statusValue;
+		
+			function changeUser(changeValue, originalValue, userId, isRole) {
+				if(isRole) {
+					if(roleValue) {
+						originalValue = roleValue;
+					}
+				} else {
+					if(statusValue) {
+						originalValue = statusValue;
+					}
+				}
+				if(changeValue != originalValue) {
+					$("#saveButton_" + userId).removeClass("disabled");
+				} else {
+					$("#saveButton_" + userId).addClass("disabled");
+				}
+			};
 
+			function updateUser(userId) {
+				var contextPath = $("meta[name='ctx']").attr("content");
+				roleValue = $("#userRole_" + userId).val();
+				statusValue = $("#userStatus_" + userId).val();
+				
+				$.ajax({
+					url : contextPath + "/updateUser/" + userId,
+					type: "POST",
+					data: {
+						"roleId": roleValue,
+						"statusId": statusValue
+					},
+					success : function(result) {
+						if(result) {
+							M.toast({html: 'Успешно редактиране на потребителя.', classes: 'rounded'});
+						} else {
+							M.toast({html: 'Възникна проблем с редактирането на потребителя.', classes: 'rounded'});
+						}
+						$("#saveButton_" + userId).addClass("disabled");
+					},
+					error : function(resul) {
+						M.toast({html: 'Възникна проблем с редактирането на потребителя.', classes: 'rounded'});
+						$("#saveButton_" + userId).addClass("disabled");
+					}
+				});
+			};
+		</script>
 	</section>
 </body>
 </html>

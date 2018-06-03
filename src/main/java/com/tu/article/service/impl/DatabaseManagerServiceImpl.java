@@ -1,10 +1,13 @@
 package com.tu.article.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tu.article.dao.DatabaseManagerDao;
+import com.tu.article.entity.Role;
 import com.tu.article.entity.Status;
 import com.tu.article.service.DatabaseManagerService;
 
@@ -35,6 +38,16 @@ public class DatabaseManagerServiceImpl implements DatabaseManagerService {
 	@Override
 	public Status getActiveStatus() {
 		return databaseManagerDao.getActiveStatus();
+	}
+
+	@Override
+	public List<Status> getAllStatuses() {
+		return databaseManagerDao.getAllStatuses();
+	}
+
+	@Override
+	public List<Role> getAllRoles() {
+		return databaseManagerDao.getAllRoles();
 	}
 
 }

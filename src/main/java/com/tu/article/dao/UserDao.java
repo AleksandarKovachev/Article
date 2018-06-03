@@ -29,4 +29,17 @@ public interface UserDao {
 	 */
 	public List<User> getUsers(BasePageFilter filter);
 
+	/**
+	 * Update the user role and status
+	 * 
+	 * @param userId
+	 *            - id of the {@link User}
+	 * @param roleId
+	 *            - id of the {@link Role}
+	 * @param statusId
+	 *            - id of the {@link Status}
+	 * @return true if the update is successful
+	 */
+	public boolean updateUserRoleAndStatus(Long userId, Long roleId, Long statusId);
+
 }

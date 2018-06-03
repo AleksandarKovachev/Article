@@ -39,4 +39,15 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 		return query.list();
 	}
 
+	@Override
+	@SuppressWarnings("rawtypes")
+	public boolean updateUserRoleAndStatus(Long userId, Long roleId, Long statusId) {
+		Query query = getSession()
+				.createQuery("update User set status.id = :status, role.id = :role where id = :id");
+		query.setParameter(DaoConstants.ID, userId);
+		query.setParameter(DaoConstants.STATUS, statusId);
+		query.setParameter(DaoConstants.ROLE, roleId);
+		return query.executeUpdate() == 1;
+	}
+
 }

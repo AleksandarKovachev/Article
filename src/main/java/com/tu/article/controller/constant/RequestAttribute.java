@@ -26,4 +26,8 @@ public class RequestAttribute {
 
 	public static final String FILTER = "filter";
 
+	public static final String ROLES = "roles";
+
+	public static final String STATUSES = "statuses";
+
 }

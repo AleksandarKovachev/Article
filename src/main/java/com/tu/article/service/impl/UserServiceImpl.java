@@ -35,4 +35,10 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUsers(filter);
 	}
 
+	@Override
+	@Transactional(value = "transactionManager", readOnly = false)
+	public boolean updateUserRoleAndStatus(Long userId, Long roleId, Long statusId) {
+		return userDao.updateUserRoleAndStatus(userId, roleId, statusId);
+	}
+
 }

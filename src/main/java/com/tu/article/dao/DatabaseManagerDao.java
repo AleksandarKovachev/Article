@@ -1,5 +1,8 @@
 package com.tu.article.dao;
 
+import java.util.List;
+
+import com.tu.article.entity.Role;
 import com.tu.article.entity.Status;
 
 /**
@@ -36,5 +39,19 @@ public interface DatabaseManagerDao {
 	 * @return active {@link Status}
 	 */
 	public Status getActiveStatus();
+
+	/**
+	 * Get all statuses
+	 * 
+	 * @return {@link List} of {@link Status}
+	 */
+	public List<Status> getAllStatuses();
+
+	/**
+	 * Get all statuses
+	 * 
+	 * @return {@link List} of {@link Role}
+	 */
+	public List<Role> getAllRoles();
 
 }
