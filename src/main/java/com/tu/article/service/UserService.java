@@ -30,6 +30,13 @@ public interface UserService {
 	public List<User> getUsers(BasePageFilter filter);
 
 	/**
+	 * Get count of all users
+	 * 
+	 * @return {@link Integer}
+	 */
+	public int getUsersCount();
+
+	/**
 	 * Update the user role and status
 	 * 
 	 * @param userId

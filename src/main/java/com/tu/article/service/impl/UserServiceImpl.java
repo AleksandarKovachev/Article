@@ -41,4 +41,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.updateUserRoleAndStatus(userId, roleId, statusId);
 	}
 
+	@Override
+	public int getUsersCount() {
+		return userDao.getUsersCount().intValue();
+	}
+
 }

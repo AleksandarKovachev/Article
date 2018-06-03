@@ -38,6 +38,7 @@ public class UserController {
 	public ModelAndView users(HttpServletRequest request, HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
 		BasePageFilter filter = new BasePageFilter(10);
+		filter.setTotalCount(userService.getUsersCount());
 		modelMap.addAttribute(RequestAttribute.FILTER, filter);
 		modelMap.addAttribute(RequestAttribute.USERS, userService.getUsers(filter));
 		modelMap.addAttribute(RequestAttribute.STATUSES, databaseManager.getAllStatuses());

@@ -40,6 +40,11 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	}
 
 	@Override
+	public Number getUsersCount() {
+		return (Number) getSession().createQuery("select count(*) from User").uniqueResult();
+	}
+
+	@Override
 	@SuppressWarnings("rawtypes")
 	public boolean updateUserRoleAndStatus(Long userId, Long roleId, Long statusId) {
 		Query query = getSession()

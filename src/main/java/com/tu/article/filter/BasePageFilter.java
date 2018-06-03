@@ -61,4 +61,20 @@ public class BasePageFilter {
 				: (getTotalCount() / getPageSize()) + 1;
 	}
 
+	public boolean getHasNextPage() {
+		return (getPageLastRow() < totalCount);
+	}
+
+	public boolean getHasPrevPage() {
+		return (getPageFirstRow() > 1);
+	}
+
+	public int getPageLastRow() {
+		return (pageNumber + 1) * pageSize;
+	}
+
+	public int getPageFirstRow() {
+		return pageNumber * pageSize + 1;
+	}
+
 }

@@ -30,6 +30,13 @@ public interface UserDao {
 	public List<User> getUsers(BasePageFilter filter);
 
 	/**
+	 * Get count of all users
+	 * 
+	 * @return {@link Number}
+	 */
+	public Number getUsersCount();
+
+	/**
 	 * Update the user role and status
 	 * 
 	 * @param userId

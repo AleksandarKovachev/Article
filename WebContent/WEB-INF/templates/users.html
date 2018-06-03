@@ -60,14 +60,17 @@
 
 
 		<ul class="pagination">
-			<li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-			<li class="active"><a href="#!">1</a></li>
-			<li class="waves-effect"><a href="#!">2</a></li>
-			<li class="waves-effect"><a href="#!">3</a></li>
-			<li class="waves-effect"><a href="#!">4</a></li>
-			<li class="waves-effect"><a href="#!">5</a></li>
-			<li class="waves-effect"><a href="#!"><i
-					class="material-icons">chevron_right</i></a></li>
+			<li
+				th:classappend="${filter.hasPrevPage} ? 'waves-effect' : disabled"><a
+				href="#!"><i class="material-icons">chevron_left</i></a></li>
+			<th:block th:each="i : ${#numbers.sequence(1, filter.totalPages)}">
+				<li
+					th:classappend="${(filter.pageNumber + 1) == i} ? 'active' : 'waves-effect'"><a
+					href="#!" th:text="${i}"></a></li>
+			</th:block>
+			<li
+				th:classappend="${filter.hasNextPage} ? 'waves-effect' : disabled"><a
+				href="#!"><i class="material-icons">chevron_right</i></a></li>
 		</ul>
 
 
