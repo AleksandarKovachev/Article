@@ -9,73 +9,11 @@
 <body>
 	<section layout:fragment="body">
 
-		<table class="striped highlight centered responsive-table">
-			<thead>
-				<tr>
-					<th th:text="#{user.number}"></th>
-					<th th:text="#{user.username}"></th>
-					<th th:text="#{user.email}"></th>
-					<th th:text="#{user.name}"></th>
-					<th th:text="#{user.organization}"></th>
-					<th th:text="#{user.degree}"></th>
-					<th th:text="#{user.isConfirmed}"></th>
-					<th th:text="#{user.role}"></th>
-					<th th:text="#{user.status}"></th>
-					<th th:text="#{user.action}"></th>
-				</tr>
-			</thead>
-
-			<tbody>
-				<th:block th:each="user, iteration : ${users}">
-					<tr>
-						<td
-							th:text="${iteration.index + (filter.pageNumber*filter.pageSize)+1}"></td>
-						<td th:text="${user.username}"></td>
-						<td th:text="${user.email}"></td>
-						<td th:text="${user.name}"></td>
-						<td th:text="${user.organization}"></td>
-						<td th:text="${user.degree.name}"></td>
-						<td
-							th:text="${user.isConfirmed == 1} ? #{user.confirmed} : #{user.notConfirmed}"></td>
-						<td width="230px"><select th:id="'userRole_' + ${user.id}"
-								th:onchange="'javascript:changeUser(value, \'' + ${user.role.id} + '\' , \'' + ${user.id} + '\', true);'">
-								<option value="-1" disabled selected th:text="#{choose}" />
-								<option th:each="role : ${roles}" th:value="${role.id}"
-									th:text="${role.name}" th:selected="${user.role.id == role.id}"></option>
-							</select></td>
-						<td><select th:id="'userStatus_' + ${user.id}"
-								th:onchange="'javascript:changeUser(value, \'' + ${user.status.id} + '\' , \'' + ${user.id} + '\', false);'">
-								<option value="-1" disabled selected th:text="#{choose}" />
-								<option th:each="status : ${statuses}" th:value="${status.id}"
-									th:text="${status.name}"
-									th:selected="${user.status.id == status.id}"></option>
-							</select></td>
-						<td><a th:id="'saveButton_' + ${user.id}"
-							class="waves-effect waves-light btn-small disabled"
-							th:text="#{user.save.button}"
-							th:onclick="'javascript:updateUser(\'' + ${user.id} + '\');'"></a></td>
-					</tr>
-			</tbody>
-		</table>
-
-
-		<ul class="pagination">
-			<li
-				th:classappend="${filter.hasPrevPage} ? 'waves-effect' : disabled"><a
-				href="#!"><i class="material-icons">chevron_left</i></a></li>
-			<th:block th:each="i : ${#numbers.sequence(1, filter.totalPages)}">
-				<li
-					th:classappend="${(filter.pageNumber + 1) == i} ? 'active' : 'waves-effect'"><a
-					href="#!" th:text="${i}"></a></li>
-			</th:block>
-			<li
-				th:classappend="${filter.hasNextPage} ? 'waves-effect' : disabled"><a
-				href="#!"><i class="material-icons">chevron_right</i></a></li>
-		</ul>
-
+		<div id="result" th:insert="ajax/usersList :: users"></div>
 
 
 		<script type="text/javascript">
+			var contextPath = $("meta[name='ctx']").attr("content");
 			var roleValue;
 			var statusValue;
 		
@@ -97,7 +35,6 @@
 			};
 
 			function updateUser(userId) {
-				var contextPath = $("meta[name='ctx']").attr("content");
 				roleValue = $("#userRole_" + userId).val();
 				statusValue = $("#userStatus_" + userId).val();
 				
@@ -122,6 +59,24 @@
 					}
 				});
 			};
+
+
+			function getData(pageNumber) {
+				$.ajax({
+					type: "POST",
+					url : contextPath + "/users/getData",
+					data: {
+						"pageNumber" : pageNumber,
+						"pageSize" : $("#pageSize").val(),
+						"totalCount" : $("#totalCount").val()
+					},
+					success : function(result) {
+						$("#result").html(result);
+					},
+					cache : false
+				});
+			};
+			
 		</script>
 	</section>
 </body>

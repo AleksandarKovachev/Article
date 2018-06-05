@@ -37,13 +37,30 @@ public class UserController {
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public ModelAndView users(HttpServletRequest request, HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
-		BasePageFilter filter = new BasePageFilter(10);
+		BasePageFilter filter = new BasePageFilter(1);
 		filter.setTotalCount(userService.getUsersCount());
+		setUserData(modelMap, filter);
+		return new ModelAndView(ViewConstant.USERS, modelMap);
+	}
+
+	@RequestMapping(value = "/users/getData", method = RequestMethod.POST)
+	public ModelAndView getData(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam(RequestAttribute.PAGE_NUMBER) Integer pageNumber,
+			@RequestParam(RequestAttribute.PAGE_SIZE) Integer pageSize,
+			@RequestParam(RequestAttribute.TOTAL_COUNT) Integer totalCount) {
+		ModelMap modelMap = new ModelMap();
+		BasePageFilter filter = new BasePageFilter(pageSize);
+		filter.setTotalCount(totalCount);
+		filter.setPageNumber(pageNumber);
+		setUserData(modelMap, filter);
+		return new ModelAndView(ViewConstant.USERS_LIST + " :: " + ViewConstant.USERS, modelMap);
+	}
+
+	private void setUserData(ModelMap modelMap, BasePageFilter filter) {
 		modelMap.addAttribute(RequestAttribute.FILTER, filter);
 		modelMap.addAttribute(RequestAttribute.USERS, userService.getUsers(filter));
 		modelMap.addAttribute(RequestAttribute.STATUSES, databaseManager.getAllStatuses());
 		modelMap.addAttribute(RequestAttribute.ROLES, databaseManager.getAllRoles());
-		return new ModelAndView(ViewConstant.USERS, modelMap);
 	}
 
 	@RequestMapping(value = "/updateUser/{id}", method = RequestMethod.POST)

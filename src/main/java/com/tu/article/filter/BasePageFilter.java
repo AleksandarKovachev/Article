@@ -77,4 +77,37 @@ public class BasePageFilter {
 		return pageNumber * pageSize + 1;
 	}
 
+	public int getLoopPagesSize() {
+		if (getTotalPages() <= 5) {
+			return getTotalPages() - 1;
+		} else {
+			return getLoopPagesStart() + 4;
+		}
+	}
+
+	public int getLoopPagesStart() {
+		if (getTotalPages() <= 5) {
+			return 0;
+		} else {
+			if (getPageNumber() - 2 >= 0) {
+				if (getPageNumber() + 2 <= getTotalPages() - 1) {
+					// the selected page is on the 3rd position
+					return getPageNumber() - 2;
+				} else if (getPageNumber() + 1 <= getTotalPages() - 1) {
+					// the selected page is on the 4th position
+					return getPageNumber() - 3;
+				} else {
+					// the selected page is on the 5th position
+					return getPageNumber() - 4;
+				}
+			} else if (getPageNumber() - 1 >= 0) {
+				// the selected page is on the second position
+				return getPageNumber() - 1;
+			} else {
+				// the selected page is on the first postion
+				return getPageNumber();
+			}
+		}
+	}
+
 }

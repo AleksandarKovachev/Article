@@ -30,4 +30,10 @@ public class RequestAttribute {
 
 	public static final String STATUSES = "statuses";
 
+	public static final String PAGE_NUMBER = "pageNumber";
+
+	public static final String PAGE_SIZE = "pageSize";
+
+	public static final String TOTAL_COUNT = "totalCount";
+
 }
