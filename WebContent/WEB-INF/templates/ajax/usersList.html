@@ -20,7 +20,6 @@
 					<th th:text="#{user.action}"></th>
 				</tr>
 			</thead>
-
 			<tbody>
 				<th:block th:each="user, iteration : ${users}">
 					<tr>
@@ -33,13 +32,15 @@
 						<td th:text="${user.degree.name}"></td>
 						<td
 							th:text="${user.isConfirmed == 1} ? #{user.confirmed} : #{user.notConfirmed}"></td>
-						<td width="230px"><select th:id="'userRole_' + ${user.id}"
+						<td width="230px"><select class="materialSelect"
+								th:id="'userRole_' + ${user.id}"
 								th:onchange="'javascript:changeUser(value, \'' + ${user.role.id} + '\' , \'' + ${user.id} + '\', true);'">
 								<option value="-1" disabled selected th:text="#{choose}" />
 								<option th:each="role : ${roles}" th:value="${role.id}"
 									th:text="${role.name}" th:selected="${user.role.id == role.id}"></option>
 							</select></td>
-						<td><select th:id="'userStatus_' + ${user.id}"
+						<td><select class="materialSelect"
+								th:id="'userStatus_' + ${user.id}"
 								th:onchange="'javascript:changeUser(value, \'' + ${user.status.id} + '\' , \'' + ${user.id} + '\', false);'">
 								<option value="-1" disabled selected th:text="#{choose}" />
 								<option th:each="status : ${statuses}" th:value="${status.id}"
@@ -100,6 +101,13 @@
 
 		<input type="hidden" id="pageSize" th:value='${filter.pageSize}' />
 		<input type="hidden" id="totalCount" th:value='${filter.totalCount}' />
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+			  $('.materialSelect').formSelect();
+			});
+		</script>
+
 	</div>
 </body>
 </html>

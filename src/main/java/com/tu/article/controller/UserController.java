@@ -37,7 +37,7 @@ public class UserController {
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public ModelAndView users(HttpServletRequest request, HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
-		BasePageFilter filter = new BasePageFilter(1);
+		BasePageFilter filter = new BasePageFilter(10);
 		filter.setTotalCount(userService.getUsersCount());
 		setUserData(modelMap, filter);
 		return new ModelAndView(ViewConstant.USERS, modelMap);
