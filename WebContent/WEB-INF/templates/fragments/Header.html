@@ -45,12 +45,18 @@
 	<ul id='account_dropdown' class='dropdown-content'>
 		<li><a th:href="@{|/${#authentication.name}|}"
 			th:text="#{menu.my.account}"></a></li>
+		<li sec:authorize="hasAuthority('ROLE_AUTHOR')"><a
+			th:href="@{/article/} + ${#authentication.name}"
+			th:text="#{menu.my.articles}"></a></li>
 		<li><a th:href="@{/logout}" th:text="#{menu.logout}"></a></li>
 	</ul>
 
 	<ul id='account_dropdown_mobile' class='dropdown-content'>
 		<li><a th:href="@{|/${#authentication.name}|}"
 			th:text="#{menu.my.account}"></a></li>
+		<li sec:authorize="hasAuthority('ROLE_AUTHOR')"><a
+			th:href="@{/article/} + ${#authentication.name}"
+			th:text="#{menu.my.articles}"></a></li>
 		<li><a th:href="@{/logout}" th:text="#{menu.logout}"></a></li>
 	</ul>
 </div>
