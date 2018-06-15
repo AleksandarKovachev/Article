@@ -19,7 +19,7 @@ import com.tu.article.controller.constant.ViewConstant;
 import com.tu.article.entity.Image;
 import com.tu.article.entity.Parameter;
 import com.tu.article.entity.User;
-import com.tu.article.entity.constant.Parameters;
+import com.tu.article.entity.constant.SystemParameter;
 import com.tu.article.service.ImageService;
 import com.tu.article.service.ParameterService;
 import com.tu.article.service.UserService;
@@ -56,8 +56,8 @@ public class AccountController {
 		} else {
 			Image image = imageService.getActiveImageByUser(user.getId());
 			Parameter apacheServerAddress = parameterService
-					.getParameterByName(Parameters.APACHE_SERVER_ADDRESS.name());
-			Parameter apacheImagePath = parameterService.getParameterByName(Parameters.APACHE_IMAGES_PATH.name());
+					.getParameterByName(SystemParameter.APACHE_SERVER_ADDRESS.name());
+			Parameter apacheImagePath = parameterService.getParameterByName(SystemParameter.APACHE_IMAGES_PATH.name());
 			if (image != null) {
 				modelMap.addAttribute(RequestAttribute.IMAGE,
 						apacheServerAddress.getValue() + apacheImagePath.getValue() + image.getName());

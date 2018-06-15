@@ -6,7 +6,7 @@ package com.tu.article.entity.constant;
  * @author aleksandar.kovachev
  *
  */
-public enum Parameters {
+public enum SystemParameter {
 
 	APACHE_SERVER_ADDRESS,
 	APACHE_IMAGES_PATH;

@@ -42,8 +42,16 @@ public class EntityConstants {
 	// Image
 	public static final String IMAGE_TABLE_NAME = "IMAGE";
 
+	// Image
+	public static final String ARTICLE_FILE_TABLE_NAME = "ARTICLE_FILE";
+
 	// Parameter
 	public static final String PARAMETER_TABLE_NAME = "PARAMETER";
 	public static final String PARAMETER_VALUE_COLUMN = "VALUE";
+
+	// Article
+	public static final String ARTICLE_TABLE_NAME = "ARTICLE";
+	public static final String ARTICLE_TITLE_COLUMN = "TITLE";
+	public static final String ARTICLE_FILE_ID_COLUMN = "ARTICLE_FILE_ID";
 
 }
