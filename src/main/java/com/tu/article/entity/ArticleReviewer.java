@@ -29,7 +29,7 @@ public class ArticleReviewer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = EntityConstants.ARTICLE_ID)
+	@Column(name = EntityConstants.ARTICLE_ID, insertable = false, updatable = false)
 	private Long articleId;
 
 	@ManyToOne
