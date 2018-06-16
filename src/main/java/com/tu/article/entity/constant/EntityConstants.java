@@ -2,7 +2,7 @@ package com.tu.article.entity.constant;
 
 /**
  * Declarations for Entity constants
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -17,6 +17,7 @@ public class EntityConstants {
 	public static final String MODIFY_DATE = "MODIFY_DATE";
 	public static final String STATUS_ID = "STATUS_ID";
 	public static final String USER_ID = "USER_ID";
+	public static final String ARTICLE_ID = "ARTICLE_ID";
 
 	// Status
 	public static final String STATUS_TABLE_NAME = "STATUS";
@@ -52,6 +53,21 @@ public class EntityConstants {
 	// Article
 	public static final String ARTICLE_TABLE_NAME = "ARTICLE";
 	public static final String ARTICLE_TITLE_COLUMN = "TITLE";
+	public static final String ARTICLE_ABSTRACT_COLUMN = "ABSTRACT";
 	public static final String ARTICLE_FILE_ID_COLUMN = "ARTICLE_FILE_ID";
+	public static final String ARTICLE_CATEGORY_ID_COLUMN = "ARTICLE_CATEGORY_ID";
+
+	// ArticleStatus
+	public static final String ARTICLE_STATUS_TABLE_NAME = "ARTICLE_STATUS";
+
+	// ArticleCategory
+	public static final String ARTICLE_CATEGORY_TABLE_NAME = "ARTICLE_CATEGORY";
+
+	// Keyword
+	public static final String KEYWORD_TABLE_NAME = "KEYWORD";
+
+	// ArticleReviewer
+	public static final String ARTICLE_REVIEWER_TABLE_NAME = "ARTICLE_REVIEWER";
+	public static final String ARTICLE_STATUS_ID = "ARTICLE_STATUS_ID";
 
 }
