@@ -57,13 +57,13 @@ public class ArticleForm {
 			messages.add("Задължително е да се добави поне една ключова дума");
 		}
 
-		if (articleFile == null) {
+		if (articleFile == null || articleFile.isEmpty()) {
 			messages.add("Задължително е да прикачи файл със статията");
-		}
-
-		String extension = FilenameUtils.getExtension(articleFile.getOriginalFilename());
-		if (!Arrays.asList(Constant.TEXT_FILE_EXTENSIONS).contains(extension)) {
-			messages.add("Прикаченият файл не е в текстов формат");
+		} else {
+			String extension = FilenameUtils.getExtension(articleFile.getOriginalFilename());
+			if (!Arrays.asList(Constant.TEXT_FILE_EXTENSIONS).contains(extension)) {
+				messages.add("Прикаченият файл не е в текстов формат");
+			}
 		}
 
 		return messages;
