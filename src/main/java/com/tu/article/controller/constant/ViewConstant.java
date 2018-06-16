@@ -2,7 +2,7 @@ package com.tu.article.controller.constant;
 
 /**
  * Defining view constants
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -17,5 +17,7 @@ public class ViewConstant {
 	public static final String USERS = "users";
 
 	public static final String USERS_LIST = "ajax/usersList";
+
+	public static final String ADD_ARTICLE = "article/addArticle";
 
 }

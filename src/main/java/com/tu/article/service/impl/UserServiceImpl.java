@@ -14,7 +14,7 @@ import com.tu.article.service.UserService;
 /**
  * Service class that implements DAO methods for working with {@link User}
  * entity
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int getUsersCount() {
 		return userDao.getUsersCount().intValue();
+	}
+
+	@Override
+	public List<User> getAuthors() {
+		return userDao.getAuthors();
 	}
 
 }

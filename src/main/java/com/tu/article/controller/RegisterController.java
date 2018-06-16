@@ -1,6 +1,7 @@
 package com.tu.article.controller;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,7 +29,7 @@ import com.tu.article.service.DegreeService;
 
 /**
  * Login controller for defining the login logic
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -61,9 +62,9 @@ public class RegisterController {
 		modelMap.addAttribute(RequestAttribute.FORM, userForm);
 		modelMap.addAttribute(RequestAttribute.DEGREES, degreeService.getAllDegrees());
 
-		String message = userForm.validate();
-		if (StringUtils.hasText(message)) {
-			modelMap.addAttribute(RequestAttribute.ERRORS, message);
+		List<String> messages = userForm.validate();
+		if (CollectionUtils.isEmpty(messages)) {
+			modelMap.addAttribute(RequestAttribute.ERRORS, messages);
 		} else {
 			User user = new User();
 			user.setUsername(userForm.getUsername());

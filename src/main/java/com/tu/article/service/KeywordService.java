@@ -19,4 +19,13 @@ public interface KeywordService {
 	 */
 	public List<Keyword> getAllKeywords();
 
+	/**
+	 * Get {@link Keyword} by given name
+	 *
+	 * @param name
+	 *            of {@link Keyword}
+	 * @return {@link Keyword}
+	 */
+	public Keyword getKeywordByName(String name);
+
 }

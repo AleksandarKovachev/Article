@@ -30,4 +30,9 @@ public class KeywordServiceImpl implements KeywordService {
 		return keywordDao.getAllKeywords();
 	}
 
+	@Override
+	public Keyword getKeywordByName(String name) {
+		return keywordDao.getKeywordByName(name);
+	}
+
 }

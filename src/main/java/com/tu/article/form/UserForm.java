@@ -1,5 +1,8 @@
 package com.tu.article.form;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.util.StringUtils;
 
 import com.tu.article.constant.Constant;
@@ -8,7 +11,7 @@ import lombok.Data;
 
 /**
  * Form for registering new user
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -25,30 +28,30 @@ public class UserForm {
 
 	private String organization;
 
-	private int degree;
+	private Long degree;
 
-	public String validate() {
-		StringBuilder messages = new StringBuilder();
+	public List<String> validate() {
+		List<String> messages = new ArrayList<>();
 		if (!StringUtils.hasText(username)) {
-			messages.append("Потребителското име е задължително поле. ");
+			messages.add("Потребителското име е задължително поле.");
 		}
 		if (!StringUtils.hasText(password)) {
-			messages.append("Паролата е задължително поле. ");
+			messages.add("Паролата е задължително поле.");
 		}
 		if (!StringUtils.hasText(email)) {
-			messages.append("Имейла е задължително поле. ");
+			messages.add("Имейла е задължително поле.");
 		}
 		if (!StringUtils.hasText(name)) {
-			messages.append("Името е задължително поле. ");
+			messages.add("Името е задължително поле.");
 		}
 		if (!StringUtils.hasText(organization)) {
-			messages.append("Организация е задължително поле. ");
+			messages.add("Организация е задължително поле.");
 		}
 		if (degree == Constant.INVALID_SELECTION) {
-			messages.append("Не сте избрали степен на образование. ");
+			messages.add("Не сте избрали степен на образование.");
 		}
 
-		return messages.toString().trim();
+		return messages;
 	}
 
 }

@@ -8,7 +8,7 @@ $(document).ready(
 				constrainWidth : false,
 				coverTrigger : false
 			});
-
+			
 			$("select[required]").css({
 				position : 'absolute',
 				display : 'inline',

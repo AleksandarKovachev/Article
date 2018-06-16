@@ -15,7 +15,7 @@ import lombok.Data;
 
 /**
  * Entity representation for article_file table
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -31,10 +31,6 @@ public class ArticleFile {
 
 	@Column(name = EntityConstants.NAME)
 	private String name;
-
-	@ManyToOne
-	@JoinColumn(name = EntityConstants.USER_ID)
-	private User user;
 
 	@ManyToOne
 	@JoinColumn(name = EntityConstants.STATUS_ID)

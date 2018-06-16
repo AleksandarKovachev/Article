@@ -10,15 +10,14 @@
 		class="row alert error">
 		<span class="closebtn">&times;</span>
 		<th:block th:each="error: ${errors}">
-			<span th:text="#{${error}}"></span>
-			<br>
+			<span th:text="${error}"></span>
+			<br clear="all">
 		</th:block>
 	</div>
 
 	<div th:if="${message != null && !message.isEmpty()}"
 		class="row alert success">
-		<span class="closebtn">&times;</span>
-		<span th:text="${message}"></span>
+		<span class="closebtn">&times;</span> <span th:text="${message}"></span>
 	</div>
 </div>
 </html>

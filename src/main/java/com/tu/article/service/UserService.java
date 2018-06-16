@@ -7,7 +7,7 @@ import com.tu.article.filter.BasePageFilter;
 
 /**
  * Defining Service for working with {@link User} entity
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -15,7 +15,7 @@ public interface UserService {
 
 	/**
 	 * Get active {@link User} by username
-	 * 
+	 *
 	 * @param username
 	 *            of {@link User}
 	 * @return {@link User}
@@ -24,21 +24,21 @@ public interface UserService {
 
 	/**
 	 * Get list of all users
-	 * 
+	 *
 	 * @return {@link List} of {@link User}
 	 */
 	public List<User> getUsers(BasePageFilter filter);
 
 	/**
 	 * Get count of all users
-	 * 
+	 *
 	 * @return {@link Integer}
 	 */
 	public int getUsersCount();
 
 	/**
 	 * Update the user role and status
-	 * 
+	 *
 	 * @param userId
 	 *            - id of the {@link User}
 	 * @param roleId
@@ -48,5 +48,12 @@ public interface UserService {
 	 * @return true if the update is successful
 	 */
 	public boolean updateUserRoleAndStatus(Long userId, Long roleId, Long statusId);
+
+	/**
+	 * Get {@link List} of {@link User} with author role
+	 *
+	 * @return {@link List} of {@link User}
+	 */
+	public List<User> getAuthors();
 
 }

@@ -34,7 +34,6 @@ public class EntityConstants {
 	public static final String USER_ORGANIZATION_COLUMN = "ORGANIZATION";
 	public static final String USER_DEGREE_COLUMN = "DEGREE";
 	public static final String USER_IS_CONFIRMED = "IS_CONFIRMED";
-	public static final String USER_ROLES_TABLE_NAME = "USER_ROLES";
 
 	// Degree
 	public static final String DEGREE_TABLE_NAME = "DEGREE";
@@ -56,6 +55,8 @@ public class EntityConstants {
 	public static final String ARTICLE_ABSTRACT_COLUMN = "ABSTRACT";
 	public static final String ARTICLE_FILE_ID_COLUMN = "ARTICLE_FILE_ID";
 	public static final String ARTICLE_CATEGORY_ID_COLUMN = "ARTICLE_CATEGORY_ID";
+	public static final String ARTICLE_AUTHOR_TABLE_NAME = "ARTICLE_AUTHOR";
+	public static final String ARTICLE_KEYWORD_TABLE_NAME = "ARTICLE_KEYWORD";
 
 	// ArticleStatus
 	public static final String ARTICLE_STATUS_TABLE_NAME = "ARTICLE_STATUS";
@@ -65,6 +66,7 @@ public class EntityConstants {
 
 	// Keyword
 	public static final String KEYWORD_TABLE_NAME = "KEYWORD";
+	public static final String KEYWORD_ID = "KEYWORD_ID";
 
 	// ArticleReviewer
 	public static final String ARTICLE_REVIEWER_TABLE_NAME = "ARTICLE_REVIEWER";

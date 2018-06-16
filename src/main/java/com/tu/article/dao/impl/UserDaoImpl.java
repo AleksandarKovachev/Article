@@ -10,11 +10,12 @@ import com.tu.article.dao.UserDao;
 import com.tu.article.dao.constant.DaoConstants;
 import com.tu.article.entity.Status;
 import com.tu.article.entity.User;
+import com.tu.article.entity.constant.RoleEnum;
 import com.tu.article.filter.BasePageFilter;
 
 /**
  * DAO class for working with {@link User} entity
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -47,12 +48,18 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	@Override
 	@SuppressWarnings("rawtypes")
 	public boolean updateUserRoleAndStatus(Long userId, Long roleId, Long statusId) {
-		Query query = getSession()
-				.createQuery("update User set status.id = :status, role.id = :role where id = :id");
+		Query query = getSession().createQuery("update User set status.id = :status, role.id = :role where id = :id");
 		query.setParameter(DaoConstants.ID, userId);
 		query.setParameter(DaoConstants.STATUS, statusId);
 		query.setParameter(DaoConstants.ROLE, roleId);
 		return query.executeUpdate() == 1;
+	}
+
+	@Override
+	public List<User> getAuthors() {
+		Query<User> query = getSession().createQuery("from User where role.id != :role", User.class);
+		query.setParameter(DaoConstants.ROLE, RoleEnum.ROLE_USER.getRoleId());
+		return query.list();
 	}
 
 }

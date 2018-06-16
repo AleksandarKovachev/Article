@@ -2,7 +2,7 @@ package com.tu.article.controller.constant;
 
 /**
  * Defining request attributes as constants
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -35,5 +35,9 @@ public class RequestAttribute {
 	public static final String PAGE_SIZE = "pageSize";
 
 	public static final String TOTAL_COUNT = "totalCount";
+
+	public static final String ARTICLE_CATEGORIES = "articleCategories";
+
+	public static final String AUTHORS = "authors";
 
 }
