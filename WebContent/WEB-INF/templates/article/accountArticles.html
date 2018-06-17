@@ -32,24 +32,26 @@
 								<td th:text="${article.title}"></td>
 								<td th:text="${article.abstractColumn}"></td>
 								<td th:text="${article.articleCategory.name}"></td>
-								<td th:each="keyword, iterator : ${article.keywords}"
-									th:text="!${iterator.last} ? ${keyword.name} + ',': ${keyword.name}"></td>
-								<td><select class="materialSelect">
+								<td><span th:each="keyword, iterator : ${article.keywords}"
+									th:text="!${iterator.last} ? ${keyword.name} + ',': ${keyword.name}"></span></td>
+								<td width="250px"><select class="materialSelect">
 										<option th:each="author : ${article.authors}"
 											th:text="${author.name}"></option>
 								</select></td>
-								<th:block th:if="${article.articleReviewers != null}">
-									<td><select class="materialSelect">
+								<td><th:block
+										th:if="${article.articleReviewers != null && !article.articleReviewers.empty}">
+										<select class="materialSelect">
 											<option th:each="reviewer : ${article.articleReviewers}"
 												th:text="${reviewer.user.name}"></option>
-									</select></td>
-								</th:block>
-								<th:block th:if="${article.articleReviewers != null}">
-									<td><select class="materialSelect">
+										</select>
+									</th:block></td>
+								<td><th:block
+										th:if="${article.articleReviewers != null && !article.articleReviewers.empty}">
+										<select class="materialSelect">
 											<option th:each="reviewer : ${article.articleReviewers}"
 												th:text="${reviewer.status.name}"></option>
-									</select></td>
-								</th:block>
+										</select>
+									</th:block></td>
 								<td><a class="waves-effect waves-light btn"
 									th:href="@{${url} + ${article.articleFile.name}}"
 									th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a></td>
@@ -61,9 +63,13 @@
 			</div>
 		</div>
 
-		<a th:href="@{/article/add/}"
-			class="btn-floating btn-large waves-effect waves-light blue lighten-1"><i
-			class="material-icons">add</i></a>
+
+
+		<div class="fixed-action-btn" style="bottom: 60px; right: 50px;">
+			<a th:href="@{/article/add/}"
+				class="btn-floating btn-large waves-effect waves-light teal"><i
+				class="material-icons">add</i></a>
+		</div>
 
 		<script type="text/javascript">
 			$(document).ready(function() {

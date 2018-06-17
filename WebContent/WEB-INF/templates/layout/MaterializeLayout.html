@@ -17,7 +17,7 @@
 	type="text/css" rel="stylesheet" media="screen,projection" />
 <link th:href="@{/resources/materialize/css/style.css}" type="text/css"
 	rel="stylesheet" media="screen,projection" />
-	
+
 <!--  Scripts-->
 <script type="text/javascript"
 	src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -27,7 +27,9 @@
 <body>
 	<header th:replace="fragments/Header :: header"></header>
 
-	<section layout:fragment="body"></section>
+	<main>
+		<section layout:fragment="body"></section>
+	</main>
 
 	<footer th:replace="fragments/Footer :: footer"></footer>
 

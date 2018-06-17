@@ -7,7 +7,9 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -133,7 +135,7 @@ public class ArticleController {
 			article.setUserId(userDetails.getId());
 			article.setArticleFile(articleFile);
 
-			List<Keyword> keywords = new ArrayList<>();
+			Set<Keyword> keywords = new LinkedHashSet<>();
 			for (String name : form.getKeywords()) {
 				Keyword keyword = keywordService.getKeywordByName(name);
 				if (keyword == null) {
@@ -145,7 +147,7 @@ public class ArticleController {
 			}
 			article.setKeywords(keywords);
 
-			List<User> authors = new ArrayList<>();
+			Set<User> authors = new LinkedHashSet<>();
 			for (Long id : form.getAuthors()) {
 				User user = (User) databaseManagerService.getObjectById(User.class, id);
 				authors.add(user);

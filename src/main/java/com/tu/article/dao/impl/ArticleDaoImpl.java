@@ -28,7 +28,7 @@ public class ArticleDaoImpl extends BaseDao implements ArticleDao {
 	@Override
 	public List<Article> getArticlesByAuthor(String username) {
 		Query<Article> query = getSession().createQuery(
-				"select article from Article as article join article.authors as user left outer join article.articleReviewers as reviewer left outer join article.keywords as keyword where user.username = :username",
+				"select article from Article as article join article.authors as user where user.username = :username",
 				Article.class);
 		query.setParameter(DaoConstants.USERNAME, username);
 		return query.list();
