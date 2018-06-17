@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tu.article.constant.Constant;
 import com.tu.article.controller.constant.RequestAttribute;
 import com.tu.article.controller.constant.ViewConstant;
 import com.tu.article.entity.Article;
@@ -91,9 +92,9 @@ public class ArticleController {
 	public ModelAndView addArticle(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute(RequestAttribute.FORM) ArticleForm form) {
 		ModelMap modelMap = new ModelMap();
-		form.setCategoryId(-1L);
+		form.setCategoryId(Constant.INVALID_SELECTION);
 		List<Long> authors = new ArrayList<>();
-		authors.add(-1L);
+		authors.add(Constant.INVALID_SELECTION);
 		form.setAuthors(authors);
 		modelMap.addAttribute(RequestAttribute.FORM, form);
 		modelMap.addAttribute(RequestAttribute.ARTICLE_CATEGORIES, articleCategoryService.getAllArticleCategories());

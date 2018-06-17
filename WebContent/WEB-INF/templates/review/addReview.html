@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/MaterializeLayout}">
+<head>
+<title th:text="#{review}"></title>
+</head>
+<body>
+	<section layout:fragment="body">
+		<div class="center">
+			<div class="container">
+				<h1 th:text="#{review.header} + ${article.title}"></h1>
+
+				<div th:replace="fragments/Messages :: messages"></div>
+
+				<form action="#" th:action="@{'/review/add/' + ${article.id}}"
+					method="POST" th:object="${form}" enctype="multipart/form-data">
+
+					<div class="row">
+						<div class="input-field col s12">
+							<select th:field="*{articleStatusId}">
+								<option value="-1" disabled selected th:text="#{choose}" />
+								<option th:each="status : ${articleStatuses}"
+									th:value="${status.id}" th:text="${status.name}"></option>
+							</select> <label th:text="#{review.status}"></label>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class='input-field col s12'>
+							<div class="file-field input-field">
+								<div class="btn">
+									<span th:text="#{article.file}"></span> <input type="file"
+										th:field="*{reviewFile}" class="indigo"
+										accept=".doc, .txt, .docx, .docm, .pdf, .dotx, .dot, .rtf">
+								</div>
+								<div class="file-path-wrapper">
+									<input class="file-path validate" type="text"
+										th:placeholder="#{article.file}">
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<button type='submit'
+							class='col s12 btn btn-large waves-effect indigo'
+							th:text="#{review.send.button}"></button>
+					</div>
+
+				</form>
+
+			</div>
+		</div>
+
+	</section>
+</body>
+</html>

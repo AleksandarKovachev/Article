@@ -46,4 +46,8 @@ public class RequestAttribute {
 
 	public static final String REVIEWERS = "reviewers";
 
+	public static final String ARTICLE = "article";
+
+	public static final String ARTICLE_STATUSES = "articleStatuses";
+
 }

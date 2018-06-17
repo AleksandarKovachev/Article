@@ -37,4 +37,13 @@ public interface ArticleDao {
 	 */
 	public List<Article> getArticlesWithoutReview();
 
+	/**
+	 * Get {@link List} of {@link Article} by reviewer
+	 *
+	 * @param username
+	 *            of {@link User}
+	 * @return {@link List} of {@link Article}
+	 */
+	public List<Article> getArticlesByReviewer(String username);
+
 }

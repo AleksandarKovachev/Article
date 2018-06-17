@@ -23,10 +23,13 @@ import com.tu.article.controller.constant.RequestAttribute;
 import com.tu.article.controller.constant.ViewConstant;
 import com.tu.article.entity.Article;
 import com.tu.article.entity.ArticleReviewer;
+import com.tu.article.entity.Parameter;
 import com.tu.article.entity.User;
+import com.tu.article.entity.constant.SystemParameter;
 import com.tu.article.filter.BasePageFilter;
 import com.tu.article.service.ArticleService;
 import com.tu.article.service.DatabaseManagerService;
+import com.tu.article.service.ParameterService;
 import com.tu.article.service.UserService;
 
 /**
@@ -46,6 +49,9 @@ public class AdminController {
 
 	@Autowired
 	private ArticleService articleService;
+
+	@Autowired
+	private ParameterService parameterService;
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public ModelAndView users(HttpServletRequest request, HttpServletResponse response) {
@@ -87,6 +93,10 @@ public class AdminController {
 	@RequestMapping(value = "/articleReviewers", method = RequestMethod.GET)
 	public ModelAndView articleReviewers(HttpServletRequest request, HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
+		Parameter apacheServerAddress = parameterService
+				.getParameterByName(SystemParameter.APACHE_SERVER_ADDRESS.name());
+		Parameter articlesPath = parameterService.getParameterByName(SystemParameter.APACHE_ARTICLES_PATH.name());
+		modelMap.addAttribute(RequestAttribute.URL, apacheServerAddress.getValue() + articlesPath.getValue());
 		modelMap.addAttribute(RequestAttribute.ARTICLES, articleService.getArticlesWithoutReview());
 		modelMap.addAttribute(RequestAttribute.REVIEWERS, userService.getReviewers());
 		return new ModelAndView(ViewConstant.ARTICLE_REVIEWERS, modelMap);

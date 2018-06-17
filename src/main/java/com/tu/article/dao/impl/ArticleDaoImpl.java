@@ -41,4 +41,13 @@ public class ArticleDaoImpl extends BaseDao implements ArticleDao {
 		return query.list();
 	}
 
+	@Override
+	public List<Article> getArticlesByReviewer(String username) {
+		Query<Article> query = getSession().createQuery(
+				"select article from Article as article join article.articleReviewers as reviewers where reviewers.user.username = :username",
+				Article.class);
+		query.setParameter(DaoConstants.USERNAME, username);
+		return query.list();
+	}
+
 }

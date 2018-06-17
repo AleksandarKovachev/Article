@@ -1,5 +1,6 @@
 package com.tu.article.dao;
 
+import com.tu.article.entity.ArticleReviewer;
 import com.tu.article.entity.Review;
 
 /**
@@ -18,5 +19,15 @@ public interface ReviewDao {
 	 * @return {@link Review}
 	 */
 	public Review getReviewById(Long id);
+
+	/**
+	 * Update reviewId of {@link ArticleReviewer} by userId
+	 *
+	 * @param userId
+	 *            of {@link User} reviewer
+	 * @param reviewId
+	 *            of {@link Review}
+	 */
+	public void updateArticleReviewer(Long userId, Long reviewId);
 
 }
