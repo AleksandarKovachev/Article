@@ -23,7 +23,7 @@ import lombok.Data;
  */
 @Data
 @Entity
-@Table(name = EntityConstants.ARTICLE_TABLE_NAME)
+@Table(name = EntityConstants.REVIEW_TABLE_NAME)
 public class Review {
 
 	@Id

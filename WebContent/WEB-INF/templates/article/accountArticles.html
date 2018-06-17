@@ -4,7 +4,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{/layout/MaterializeLayout}">
 <head>
-<title th:text="#{menu.my.articles}"></title>
+<title th:text="#{menu.articles}"></title>
 </head>
 <body>
 	<section layout:fragment="body">
@@ -51,7 +51,7 @@
 											th:if="${article.articleReviewers != null && !article.articleReviewers.empty}">
 											<select class="materialSelect">
 												<option th:each="reviewer : ${article.articleReviewers}"
-													th:text="${reviewer.status.name}"></option>
+													th:text="${reviewer.review.articleStatus.name}"></option>
 											</select>
 										</th:block></td>
 									<td><a class="waves-effect waves-light btn"

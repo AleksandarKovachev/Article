@@ -22,4 +22,6 @@ public class ViewConstant {
 
 	public static final String ACCOUNT_ARTICLES = "article/accountArticles";
 
+	public static final String ACCOUNT_REVIEWS = "review/accountReviews";
+
 }
