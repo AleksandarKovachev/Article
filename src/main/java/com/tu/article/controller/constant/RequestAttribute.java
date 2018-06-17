@@ -44,4 +44,6 @@ public class RequestAttribute {
 
 	public static final String URL = "url";
 
+	public static final String REVIEWERS = "reviewers";
+
 }

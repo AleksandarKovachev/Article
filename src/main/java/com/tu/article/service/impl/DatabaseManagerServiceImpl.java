@@ -13,7 +13,7 @@ import com.tu.article.service.DatabaseManagerService;
 
 /**
  * Service class that implements base DAO methods
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -48,6 +48,12 @@ public class DatabaseManagerServiceImpl implements DatabaseManagerService {
 	@Override
 	public List<Role> getAllRoles() {
 		return databaseManagerDao.getAllRoles();
+	}
+
+	@Override
+	@Transactional(value = "transactionManager", readOnly = false)
+	public void updateObject(Object entity) {
+		databaseManagerDao.updateObject(entity);
 	}
 
 }

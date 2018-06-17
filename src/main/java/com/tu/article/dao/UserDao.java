@@ -65,4 +65,11 @@ public interface UserDao {
 	 */
 	public List<User> getAuthors();
 
+	/**
+	 * Get {@link List} of {@link User} with reviewer role
+	 *
+	 * @return {@link List} of {@link User}
+	 */
+	public List<User> getReviewers();
+
 }

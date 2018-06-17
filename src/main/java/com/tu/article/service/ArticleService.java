@@ -30,4 +30,11 @@ public interface ArticleService {
 	 */
 	public List<Article> getArticlesByAuthor(String username);
 
+	/**
+	 * Get {@link List} of {@link Article} without review
+	 *
+	 * @return {@link List} of {@link Article}
+	 */
+	public List<Article> getArticlesWithoutReview();
+
 }

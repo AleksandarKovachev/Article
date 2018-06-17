@@ -12,7 +12,7 @@ import com.tu.article.entity.Status;
 
 /**
  * Base DAO methods
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -27,6 +27,11 @@ public class DatabaseManagerDaoImpl extends BaseDao implements DatabaseManagerDa
 	@Override
 	public Long addObject(Object entity) {
 		return (Long) getSession().save(entity);
+	}
+
+	@Override
+	public void updateObject(Object entity) {
+		getSession().update(entity);
 	}
 
 	@Override

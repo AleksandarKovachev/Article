@@ -14,7 +14,7 @@ public class ViewConstant {
 
 	public static final String ACCOUNT = "account";
 
-	public static final String USERS = "users";
+	public static final String USERS = "admin/users";
 
 	public static final String USERS_LIST = "ajax/usersList";
 
@@ -23,5 +23,7 @@ public class ViewConstant {
 	public static final String ACCOUNT_ARTICLES = "article/accountArticles";
 
 	public static final String ACCOUNT_REVIEWS = "review/accountReviews";
+
+	public static final String ARTICLE_REVIEWERS = "admin/articleReviewers";
 
 }

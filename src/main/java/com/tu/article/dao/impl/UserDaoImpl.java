@@ -1,5 +1,6 @@
 package com.tu.article.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.query.Query;
@@ -56,9 +57,9 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	}
 
 	@Override
-	@SuppressWarnings("rawtypes")
 	public boolean updateUserRoleAndStatus(Long userId, Long roleId, Long statusId) {
-		Query query = getSession().createQuery("update User set status.id = :status, role.id = :role where id = :id");
+		Query<User> query = getSession()
+				.createQuery("update User set status.id = :status, role.id = :role where id = :id", User.class);
 		query.setParameter(DaoConstants.ID, userId);
 		query.setParameter(DaoConstants.STATUS, statusId);
 		query.setParameter(DaoConstants.ROLE, roleId);
@@ -69,6 +70,16 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	public List<User> getAuthors() {
 		Query<User> query = getSession().createQuery("from User where role.id != :role", User.class);
 		query.setParameter(DaoConstants.ROLE, RoleEnum.ROLE_USER.getRoleId());
+		return query.list();
+	}
+
+	@Override
+	public List<User> getReviewers() {
+		Query<User> query = getSession().createQuery("from User where role.id not in(:role)", User.class);
+		List<Long> roles = new ArrayList<>();
+		roles.add(RoleEnum.ROLE_USER.getRoleId());
+		roles.add(RoleEnum.ROLE_AUTHOR.getRoleId());
+		query.setParameter(DaoConstants.ROLE, roles);
 		return query.list();
 	}
 

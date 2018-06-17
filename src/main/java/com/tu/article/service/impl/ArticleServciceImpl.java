@@ -34,4 +34,9 @@ public class ArticleServciceImpl implements ArticleService {
 		return articleDao.getArticlesByAuthor(username);
 	}
 
+	@Override
+	public List<Article> getArticlesWithoutReview() {
+		return articleDao.getArticlesWithoutReview();
+	}
+
 }

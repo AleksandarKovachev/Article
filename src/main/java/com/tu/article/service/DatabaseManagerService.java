@@ -7,7 +7,7 @@ import com.tu.article.entity.Status;
 
 /**
  * Defining base Service methods
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -15,7 +15,7 @@ public interface DatabaseManagerService {
 
 	/**
 	 * Get database object by given entity and id
-	 * 
+	 *
 	 * @param entity
 	 *            type
 	 * @param id
@@ -26,7 +26,7 @@ public interface DatabaseManagerService {
 
 	/**
 	 * Save database object
-	 * 
+	 *
 	 * @param entity
 	 *            the database object
 	 * @return the resulted id from the database
@@ -35,23 +35,31 @@ public interface DatabaseManagerService {
 
 	/**
 	 * Returns the active {@link Status}
-	 * 
+	 *
 	 * @return active {@link Status}
 	 */
 	public Status getActiveStatus();
 
 	/**
 	 * Get all statuses
-	 * 
+	 *
 	 * @return {@link List} of {@link Status}
 	 */
 	public List<Status> getAllStatuses();
 
 	/**
 	 * Get all statuses
-	 * 
+	 *
 	 * @return {@link List} of {@link Role}
 	 */
 	public List<Role> getAllRoles();
+
+	/**
+	 * Update database object
+	 *
+	 * @param entity
+	 *            the database object
+	 */
+	void updateObject(Object entity);
 
 }

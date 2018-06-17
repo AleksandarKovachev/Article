@@ -56,4 +56,9 @@ public class UserServiceImpl implements UserService {
 		return userDao.getAuthors();
 	}
 
+	@Override
+	public List<User> getReviewers() {
+		return userDao.getReviewers();
+	}
+
 }

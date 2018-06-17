@@ -17,6 +17,8 @@
 					<li><a href="#!" th:text="#{menu.articles}"></a></li>
 					<li sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"><a
 						th:href="@{/users}" th:text="#{menu.users}"></a></li>
+					<li sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"><a
+						th:href="@{/articleReviewers}" th:text="#{menu.article.reviewers}"></a></li>
 					<li sec:authorize="isAuthenticated()"><a
 						class="dropdown-trigger" href="#!" data-target="account_dropdown"
 						th:inline="text">[[#{menu.account}]] <i
@@ -34,6 +36,8 @@
 			th:text="#{menu.articles}"></a></li>
 		<li sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"><a
 			th:href="@{/users}" th:text="#{menu.users}"></a></li>
+		<li sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"><a
+			th:href="@{/articleReviewers}" th:text="#{menu.article.reviewers}"></a></li>
 		<li sec:authorize="isAuthenticated()"><a class="dropdown-trigger"
 			href="#!" data-target="account_dropdown_mobile" th:inline="text">[[#{menu.account}]]
 				<i class="material-icons right">arrow_drop_down</i>

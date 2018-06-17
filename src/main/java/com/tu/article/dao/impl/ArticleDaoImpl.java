@@ -33,4 +33,12 @@ public class ArticleDaoImpl extends BaseDao implements ArticleDao {
 		return query.list();
 	}
 
+	@Override
+	public List<Article> getArticlesWithoutReview() {
+		Query<Article> query = getSession().createQuery(
+				"select article from Article as article left join article.articleReviewers as reviewers where reviewers.id is null",
+				Article.class);
+		return query.list();
+	}
+
 }
