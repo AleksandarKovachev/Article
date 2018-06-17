@@ -7,9 +7,7 @@ import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tu.article.controller.constant.RequestAttribute;
 import com.tu.article.controller.constant.ViewConstant;
 import com.tu.article.entity.Article;
+import com.tu.article.entity.ArticleCategory;
 import com.tu.article.entity.ArticleFile;
 import com.tu.article.entity.Keyword;
 import com.tu.article.entity.Parameter;
@@ -38,6 +37,7 @@ import com.tu.article.entity.constant.SystemParameter;
 import com.tu.article.form.ArticleForm;
 import com.tu.article.security.UserDetailsImpl;
 import com.tu.article.service.ArticleCategoryService;
+import com.tu.article.service.ArticleService;
 import com.tu.article.service.DatabaseManagerService;
 import com.tu.article.service.KeywordService;
 import com.tu.article.service.ParameterService;
@@ -67,11 +67,22 @@ public class ArticleController {
 	@Autowired
 	private ParameterService parameterService;
 
+	@Autowired
+	private ArticleService articleService;
+
 	@RequestMapping(value = "/article/{" + RequestAttribute.USERNAME + "}", method = RequestMethod.GET)
 	public ModelAndView account(@PathVariable(value = RequestAttribute.USERNAME) String username,
 			HttpServletRequest request, HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
-		return new ModelAndView("index", modelMap);
+		List<Article> articles = articleService.getArticlesByAuthor(username);
+		modelMap.addAttribute(RequestAttribute.ARTICLES, articles);
+
+		Parameter apacheServerAddress = parameterService
+				.getParameterByName(SystemParameter.APACHE_SERVER_ADDRESS.name());
+		Parameter articlesPath = parameterService.getParameterByName(SystemParameter.APACHE_ARTICLES_PATH.name());
+		modelMap.addAttribute(RequestAttribute.URL, apacheServerAddress.getValue() + articlesPath.getValue());
+
+		return new ModelAndView(ViewConstant.ACCOUNT_ARTICLES, modelMap);
 	}
 
 	@RequestMapping(value = "/article/add", method = RequestMethod.GET)
@@ -111,17 +122,18 @@ public class ArticleController {
 			ArticleFile articleFile = new ArticleFile();
 			articleFile.setName(fileName);
 			articleFile.setStatus(databaseManagerService.getActiveStatus());
-			Long articleFileId = databaseManagerService.addObject(articleFile);
+			articleFile.setId(databaseManagerService.addObject(articleFile));
 
 			Article article = new Article();
 			article.setTitle(form.getTitle());
 			article.setAbstractColumn(form.getAbstractText());
-			article.setArticleCategoryId(form.getCategoryId());
+			article.setArticleCategory((ArticleCategory) databaseManagerService.getObjectById(ArticleCategory.class,
+					form.getCategoryId()));
 			article.setCreateDate(new Date());
 			article.setUserId(userDetails.getId());
-			article.setArticleFileId(articleFileId);
+			article.setArticleFile(articleFile);
 
-			Set<Keyword> keywords = new HashSet<>();
+			List<Keyword> keywords = new ArrayList<>();
 			for (String name : form.getKeywords()) {
 				Keyword keyword = keywordService.getKeywordByName(name);
 				if (keyword == null) {
@@ -133,7 +145,7 @@ public class ArticleController {
 			}
 			article.setKeywords(keywords);
 
-			Set<User> authors = new HashSet<>();
+			List<User> authors = new ArrayList<>();
 			for (Long id : form.getAuthors()) {
 				User user = (User) databaseManagerService.getObjectById(User.class, id);
 				authors.add(user);

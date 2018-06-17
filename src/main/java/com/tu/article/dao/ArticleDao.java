@@ -1,5 +1,7 @@
 package com.tu.article.dao;
 
+import java.util.List;
+
 import com.tu.article.entity.Article;
 
 /**
@@ -18,5 +20,14 @@ public interface ArticleDao {
 	 * @return {@link Article}
 	 */
 	public Article getArticleById(Long id);
+
+	/**
+	 * Get {@link List} of {@link Article} by author
+	 *
+	 * @param username
+	 *            of {@link User}
+	 * @return {@link List} of {@link Article}
+	 */
+	public List<Article> getArticlesByAuthor(String username);
 
 }

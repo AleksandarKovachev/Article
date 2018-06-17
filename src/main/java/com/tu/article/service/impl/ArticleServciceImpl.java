@@ -1,5 +1,7 @@
 package com.tu.article.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,11 @@ public class ArticleServciceImpl implements ArticleService {
 	@Override
 	public Article getArticleById(Long id) {
 		return articleDao.getArticleById(id);
+	}
+
+	@Override
+	public List<Article> getArticlesByAuthor(String username) {
+		return articleDao.getArticlesByAuthor(username);
 	}
 
 }

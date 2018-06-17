@@ -20,4 +20,6 @@ public class ViewConstant {
 
 	public static final String ADD_ARTICLE = "article/addArticle";
 
+	public static final String ACCOUNT_ARTICLES = "article/accountArticles";
+
 }

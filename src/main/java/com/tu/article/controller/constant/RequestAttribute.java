@@ -40,4 +40,8 @@ public class RequestAttribute {
 
 	public static final String AUTHORS = "authors";
 
+	public static final String ARTICLES = "articles";
+
+	public static final String URL = "url";
+
 }

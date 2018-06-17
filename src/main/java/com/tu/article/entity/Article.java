@@ -1,7 +1,7 @@
 package com.tu.article.entity;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -45,11 +46,13 @@ public class Article {
 	@Column(name = EntityConstants.CREATE_DATE)
 	private Date createDate;
 
-	@Column(name = EntityConstants.ARTICLE_CATEGORY_ID_COLUMN)
-	private Long articleCategoryId;
+	@ManyToOne
+	@JoinColumn(name = EntityConstants.ARTICLE_CATEGORY_ID_COLUMN)
+	private ArticleCategory articleCategory;
 
-	@Column(name = EntityConstants.ARTICLE_FILE_ID_COLUMN)
-	private Long articleFileId;
+	@ManyToOne
+	@JoinColumn(name = EntityConstants.ARTICLE_FILE_ID_COLUMN)
+	private ArticleFile articleFile;
 
 	@Column(name = EntityConstants.USER_ID)
 	private Long userId;
@@ -58,16 +61,16 @@ public class Article {
 	@JoinTable(name = EntityConstants.ARTICLE_AUTHOR_TABLE_NAME, joinColumns = {
 			@JoinColumn(name = EntityConstants.ARTICLE_ID) }, inverseJoinColumns = {
 					@JoinColumn(name = EntityConstants.USER_ID) })
-	private Set<User> authors;
+	private List<User> authors;
 
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.LAZY)
 	@JoinTable(name = EntityConstants.ARTICLE_KEYWORD_TABLE_NAME, joinColumns = {
 			@JoinColumn(name = EntityConstants.ARTICLE_ID) }, inverseJoinColumns = {
 					@JoinColumn(name = EntityConstants.KEYWORD_ID) })
-	private Set<Keyword> keywords;
+	private List<Keyword> keywords;
 
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, targetEntity = ArticleReviewer.class)
 	@JoinColumn(name = EntityConstants.ARTICLE_ID, referencedColumnName = EntityConstants.ID, nullable = false)
-	private Set<ArticleReviewer> articleReviewers;
+	private List<ArticleReviewer> articleReviewers;
 
 }
