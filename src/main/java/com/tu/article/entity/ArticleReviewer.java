@@ -36,7 +36,8 @@ public class ArticleReviewer {
 	@JoinColumn(name = EntityConstants.USER_ID)
 	private User user;
 
-	@Column(name = EntityConstants.REVIEW_ID)
-	private Long reviewId;
+	@ManyToOne
+	@JoinColumn(name = EntityConstants.REVIEW_ID)
+	private Review review;
 
 }

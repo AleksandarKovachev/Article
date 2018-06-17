@@ -121,8 +121,8 @@ public class ReviewController {
 			review.setReviewFile(reviewFile);
 			review.setStatus(databaseManagerService.getActiveStatus());
 
-			Long reviewId = databaseManagerService.addObject(review);
-			reviewService.updateArticleReviewer(userDetails.getId(), reviewId);
+			review.setId(databaseManagerService.addObject(review));
+			reviewService.updateArticleReviewer(userDetails.getId(), review);
 		}
 
 		modelMap.addAttribute(RequestAttribute.ARTICLE,

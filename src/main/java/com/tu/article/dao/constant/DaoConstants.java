@@ -19,6 +19,6 @@ public class DaoConstants {
 	public static final String EMAIL = "email";
 	public static final String ROLE = "role";
 
-	public static final String REVIEW_ID = "reviewId";
+	public static final String REVIEW = "review";
 
 }

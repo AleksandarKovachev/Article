@@ -50,7 +50,8 @@
 									<td><th:block
 											th:if="${article.articleReviewers != null && !article.articleReviewers.empty}">
 											<select class="materialSelect">
-												<option th:each="reviewer : ${article.articleReviewers}"
+												<option th:if="${reviewer.review != null}"
+													th:each="reviewer : ${article.articleReviewers}"
 													th:text="${reviewer.review.articleStatus.name}"></option>
 											</select>
 										</th:block></td>
@@ -62,11 +63,11 @@
 						</tbody>
 					</table>
 				</th:block>
-				
+
 				<th:block th:if="${articles.empty}">
 					<h1 th:text="#{articles.empty.for.account}"></h1>
 				</th:block>
-				
+
 			</div>
 		</div>
 

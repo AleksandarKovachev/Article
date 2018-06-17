@@ -29,8 +29,8 @@ public class ReviewServiceImpl implements ReviewService {
 
 	@Override
 	@Transactional(value = "transactionManager", readOnly = false)
-	public void updateArticleReviewer(Long userId, Long reviewId) {
-		reviewDao.updateArticleReviewer(userId, reviewId);
+	public void updateArticleReviewer(Long userId, Review review) {
+		reviewDao.updateArticleReviewer(userId, review);
 	}
 
 }

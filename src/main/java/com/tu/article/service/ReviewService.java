@@ -21,13 +21,13 @@ public interface ReviewService {
 	public Review getReviewById(Long id);
 
 	/**
-	 * Update reviewId of {@link ArticleReviewer} by userId
+	 * Update review of {@link ArticleReviewer} by userId
 	 *
 	 * @param userId
 	 *            of {@link User} reviewer
-	 * @param reviewId
-	 *            of {@link Review}
+	 * @param review
+	 *            {@link Review}
 	 */
-	public void updateArticleReviewer(Long userId, Long reviewId);
+	public void updateArticleReviewer(Long userId, Review review);
 
 }
