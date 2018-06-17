@@ -33,6 +33,16 @@ public class UserDaoImpl extends BaseDao implements UserDao {
 	}
 
 	@Override
+	public User getActiveUserByEmail(String email) {
+		Query<User> query = getSession().createQuery(
+				"from User where email = :" + DaoConstants.EMAIL + " and status.id = :" + DaoConstants.STATUS,
+				User.class);
+		query.setParameter(DaoConstants.EMAIL, email);
+		query.setParameter(DaoConstants.STATUS, Status.ACTIVE_STATUS);
+		return query.uniqueResult();
+	}
+
+	@Override
 	public List<User> getUsers(BasePageFilter filter) {
 		Query<User> query = getSession().createQuery("from User", User.class);
 		query.setFirstResult(filter.getPageNumber() * filter.getPageSize());

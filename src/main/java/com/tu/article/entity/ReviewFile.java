@@ -14,30 +14,26 @@ import com.tu.article.entity.constant.EntityConstants;
 import lombok.Data;
 
 /**
- * Entity representation for article_reviewer table
+ * Entity representation for review_file table
  *
  * @author aleksandar.kovachev
  *
  */
 @Data
 @Entity
-@Table(name = EntityConstants.ARTICLE_REVIEWER_TABLE_NAME)
-public class ArticleReviewer {
+@Table(name = EntityConstants.REVIEW_FILE_TABLE_NAME)
+public class ReviewFile {
 
 	@Id
 	@Column(name = EntityConstants.ID)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = EntityConstants.ARTICLE_ID, insertable = false, updatable = false)
-	private Long articleId;
+	@Column(name = EntityConstants.NAME)
+	private String name;
 
 	@ManyToOne
-	@JoinColumn(name = EntityConstants.USER_ID)
-	private User user;
-
-	@ManyToOne
-	@JoinColumn(name = EntityConstants.REVIEW_ID)
-	private Review review;
+	@JoinColumn(name = EntityConstants.STATUS_ID)
+	private Status status;
 
 }

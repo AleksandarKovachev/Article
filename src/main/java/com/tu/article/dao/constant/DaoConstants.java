@@ -2,7 +2,7 @@ package com.tu.article.dao.constant;
 
 /**
  * Declarations for DAO constants
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -16,6 +16,7 @@ public class DaoConstants {
 
 	// User
 	public static final String USERNAME = "username";
+	public static final String EMAIL = "email";
 	public static final String ROLE = "role";
 
 }

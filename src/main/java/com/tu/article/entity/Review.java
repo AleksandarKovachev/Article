@@ -1,5 +1,7 @@
 package com.tu.article.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,30 +16,34 @@ import com.tu.article.entity.constant.EntityConstants;
 import lombok.Data;
 
 /**
- * Entity representation for article_reviewer table
+ * Entity representation for review table
  *
  * @author aleksandar.kovachev
  *
  */
 @Data
 @Entity
-@Table(name = EntityConstants.ARTICLE_REVIEWER_TABLE_NAME)
-public class ArticleReviewer {
+@Table(name = EntityConstants.ARTICLE_TABLE_NAME)
+public class Review {
 
 	@Id
 	@Column(name = EntityConstants.ID)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = EntityConstants.ARTICLE_ID, insertable = false, updatable = false)
-	private Long articleId;
+	@Column(name = EntityConstants.CREATE_DATE)
+	private Date createDate;
 
 	@ManyToOne
-	@JoinColumn(name = EntityConstants.USER_ID)
-	private User user;
+	@JoinColumn(name = EntityConstants.ARTICLE_STATUS_ID)
+	private ArticleStatus articleStatus;
 
 	@ManyToOne
-	@JoinColumn(name = EntityConstants.REVIEW_ID)
-	private Review review;
+	@JoinColumn(name = EntityConstants.REVIEW_FILE_ID_COLUMN)
+	private ReviewFile reviewFile;
+
+	@ManyToOne
+	@JoinColumn(name = EntityConstants.STATUS_ID)
+	private Status status;
 
 }

@@ -70,6 +70,14 @@ public class EntityConstants {
 
 	// ArticleReviewer
 	public static final String ARTICLE_REVIEWER_TABLE_NAME = "ARTICLE_REVIEWER";
+	public static final String REVIEW_ID = "REVIEW_ID";
+
+	// Review
+	public static final String REVIEW_TABLE_NAME = "REVIEW";
+	public static final String REVIEW_FILE_ID_COLUMN = "REVIEW_FILE_ID";
 	public static final String ARTICLE_STATUS_ID = "ARTICLE_STATUS_ID";
+
+	// ReviewFile
+	public static final String REVIEW_FILE_TABLE_NAME = "REVIEW_FILE";
 
 }

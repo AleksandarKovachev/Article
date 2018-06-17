@@ -23,6 +23,15 @@ public interface UserDao {
 	public User getActiveUserByUsername(String username);
 
 	/**
+	 * Get active {@link User} by email
+	 *
+	 * @param email
+	 *            of {@link User}
+	 * @return {@link User}
+	 */
+	public User getActiveUserByEmail(String email);
+
+	/**
 	 * Get list of all users
 	 *
 	 * @return {@link List} of {@link User}

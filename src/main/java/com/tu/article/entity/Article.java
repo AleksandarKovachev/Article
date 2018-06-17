@@ -60,6 +60,10 @@ public class Article {
 	@Column(name = EntityConstants.USER_ID)
 	private Long userId;
 
+	@ManyToOne
+	@JoinColumn(name = EntityConstants.STATUS_ID)
+	private Status status;
+
 	@Fetch(value = FetchMode.JOIN)
 	@ManyToMany(cascade = { CascadeType.ALL }, fetch = FetchType.EAGER)
 	@JoinTable(name = EntityConstants.ARTICLE_AUTHOR_TABLE_NAME, joinColumns = {

@@ -26,6 +26,7 @@ import com.tu.article.entity.constant.RoleEnum;
 import com.tu.article.form.UserForm;
 import com.tu.article.service.DatabaseManagerService;
 import com.tu.article.service.DegreeService;
+import com.tu.article.service.UserService;
 
 /**
  * Login controller for defining the login logic
@@ -45,6 +46,9 @@ public class RegisterController {
 	@Autowired
 	private DatabaseManagerService databaseManager;
 
+	@Autowired
+	private UserService userService;
+
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	public ModelAndView registerView(HttpServletRequest request, HttpServletResponse response,
 			@ModelAttribute(RequestAttribute.FORM) UserForm userForm) {
@@ -62,8 +66,8 @@ public class RegisterController {
 		modelMap.addAttribute(RequestAttribute.FORM, userForm);
 		modelMap.addAttribute(RequestAttribute.DEGREES, degreeService.getAllDegrees());
 
-		List<String> messages = userForm.validate();
-		if (CollectionUtils.isEmpty(messages)) {
+		List<String> messages = userForm.validate(userService);
+		if (!CollectionUtils.isEmpty(messages)) {
 			modelMap.addAttribute(RequestAttribute.ERRORS, messages);
 		} else {
 			User user = new User();

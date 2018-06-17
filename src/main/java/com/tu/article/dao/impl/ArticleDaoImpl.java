@@ -9,10 +9,9 @@ import com.tu.article.dao.ArticleDao;
 import com.tu.article.dao.BaseDao;
 import com.tu.article.dao.constant.DaoConstants;
 import com.tu.article.entity.Article;
-import com.tu.article.entity.Image;
 
 /**
- * DAO class for working with {@link Image} entity
+ * DAO class for working with {@link Article} entity
  *
  * @author aleksandar.kovachev
  *

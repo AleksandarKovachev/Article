@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.util.StringUtils;
 
 import com.tu.article.constant.Constant;
+import com.tu.article.entity.User;
+import com.tu.article.service.UserService;
 
 import lombok.Data;
 
@@ -30,16 +32,26 @@ public class UserForm {
 
 	private Long degree;
 
-	public List<String> validate() {
+	public List<String> validate(UserService userService) {
 		List<String> messages = new ArrayList<>();
 		if (!StringUtils.hasText(username)) {
 			messages.add("Потребителското име е задължително поле.");
+		} else {
+			User user = userService.getActiveUserByUsername(username);
+			if (user != null) {
+				messages.add(String.format("Потребителското име %1$s е заето.", username));
+			}
 		}
 		if (!StringUtils.hasText(password)) {
 			messages.add("Паролата е задължително поле.");
 		}
 		if (!StringUtils.hasText(email)) {
 			messages.add("Имейла е задължително поле.");
+		} else {
+			User user = userService.getActiveUserByEmail(email);
+			if (user != null) {
+				messages.add(String.format("Имейла %1$s е зает.", email));
+			}
 		}
 		if (!StringUtils.hasText(name)) {
 			messages.add("Името е задължително поле.");

@@ -31,6 +31,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	public User getActiveUserByEmail(String email) {
+		return userDao.getActiveUserByEmail(email);
+	}
+
+	@Override
 	public List<User> getUsers(BasePageFilter filter) {
 		return userDao.getUsers(filter);
 	}
