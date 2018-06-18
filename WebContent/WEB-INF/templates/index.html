@@ -7,6 +7,86 @@
 <title th:text="#{menu.home}"></title>
 </head>
 <body>
-	<section layout:fragment="body"></section>
+	<section layout:fragment="body">
+
+		<div class="parallax-container" style="height: 750px;">
+			<div class="section no-pad-bot">
+				<div class="container">
+					<h1 class="header center white-text text-lighten-2"
+						th:text="#{menu.articles}"></h1>
+
+					<div class="container"
+						style="background-color: #000000; border: 1px solid black; opacity: 0.6; filter: alpha(opacity = 60); padding: 20px;">
+						<form th:action="@{/}" method="POST" class="col s12"
+							th:object="${filter}">
+
+							<div class='row'>
+								<div class='input-field col s12 white-text'>
+									<i class="material-icons prefix">title</i> <input type='text'
+										class="white-text input-in-box" name='title' id='title'
+										th:field="*{title}" /> <label for='title'
+										th:text="#{article.title}"></label>
+								</div>
+							</div>
+
+							<div class='row'>
+								<div class='input-field col s12 white-text'>
+									<i class="material-icons prefix">subtitles</i> <input
+										type='text' class="white-text input-in-box" name='title'
+										id='title' th:field="*{abstractText}" /> <label for='title'
+										th:text="#{article.abstract}"></label>
+								</div>
+							</div>
+
+							<div class='row'>
+								<div class="input-field col s12 white-text">
+									<i class="material-icons prefix">filter_list</i> <select
+										id="categoriesSelect" class="white-text"
+										th:field="*{categoryId}">
+										<option value="-1" disabled selected th:text="#{choose}" />
+										<option th:each="category : ${articleCategories}"
+											th:value="${category.id}" th:text="${category.name}"></option>
+									</select> <label th:text="#{article.category}"></label>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col s12">
+									<div class="row">
+										<div class="input-field col s12 white-text">
+											<i class="material-icons prefix">account_circle</i> <input
+												type="text" id="author" name="author"
+												class="white-text autocomplete" th:field="*{authorName}">
+											<label for="author" th:text="#{article.author}"></label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							<div class="row">
+								<button type='submit'
+									class='col s12 btn btn-large waves-effect indigo'
+									th:text="#{search.button}"></button>
+							</div>
+						</form>
+					</div>
+
+				</div>
+			</div>
+			<div class="parallax">
+				<img class="responsive-img" th:src="@{${url} + article.jpg}">
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				function init() {
+					$('input[type=text]').addClass("white-text");
+				}
+
+				setTimeout(init, 100);
+			});
+		</script>
+	</section>
 </body>
 </html>

@@ -2,7 +2,7 @@ package com.tu.article.filter;
 
 /**
  * Base filter with defined methods for working with the pagination
- * 
+ *
  * @author aleksandar.kovachev
  *
  */

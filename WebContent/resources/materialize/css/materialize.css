@@ -6584,7 +6584,8 @@ textarea.materialize-textarea + label:after, .select-wrapper + label:after {
 .input-field .prefix ~ label,
 .input-field .prefix ~ .validate ~ label,
 .input-field .prefix ~ .helper-text,
-.input-field .prefix ~ .autocomplete-content {
+.input-field .prefix ~ .autocomplete-content,
+.input-field .prefix ~ div.select-wrapper{
   margin-left: 3rem;
   width: 92%;
   width: calc(100% - 3rem);
