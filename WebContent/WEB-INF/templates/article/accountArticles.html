@@ -22,7 +22,7 @@
 								<th th:text="#{article.keywords}"></th>
 								<th th:text="#{article.authors}"></th>
 								<th th:text="#{article.reviewers}"></th>
-								<th th:text="#{article.statuses}"></th>
+								<th th:text="#{article.status}"></th>
 								<th th:text="#{article.file}"></th>
 							</tr>
 						</thead>
@@ -42,19 +42,15 @@
 									</select></td>
 									<td><th:block
 											th:if="${article.articleReviewers != null && !article.articleReviewers.empty}">
-											<select class="materialSelect">
+											<select class="materialSelect"
+												th:onchange="'javascript:changeReviewer(this.value, \'' + ${article.id} + '\',);'">
 												<option th:each="reviewer : ${article.articleReviewers}"
-													th:text="${reviewer.user.name}"></option>
+													th:text="${reviewer.user.name}"
+													th:value="${reviewer.review != null ? reviewer.review.articleStatus.name : ''}"></option>
 											</select>
 										</th:block></td>
-									<td><th:block
-											th:if="${article.articleReviewers != null && !article.articleReviewers.empty}">
-											<select class="materialSelect">
-												<option th:if="${reviewer.review != null}"
-													th:each="reviewer : ${article.articleReviewers}"
-													th:text="${reviewer.review.articleStatus.name}"></option>
-											</select>
-										</th:block></td>
+									<td><span th:id="'reviewerStatus_' + ${article.id}"></span>
+									</td>
 									<td><a class="waves-effect waves-light btn"
 										th:href="@{${url} + ${article.articleFile.name}}"
 										th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a></td>
@@ -83,6 +79,11 @@
 			$(document).ready(function() {
 			  $('.materialSelect').formSelect();
 			});
+
+			function changeReviewer(articleStatus, articleId) {
+				$("#reviewerStatus_" + articleId).text(articleStatus);
+			}
+			
 		</script>
 	</section>
 </body>
