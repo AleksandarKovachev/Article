@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tu.article.dao.ArticleDao;
 import com.tu.article.entity.Article;
+import com.tu.article.filter.ArticleFilter;
 import com.tu.article.service.ArticleService;
 
 /**
@@ -42,6 +43,16 @@ public class ArticleServciceImpl implements ArticleService {
 	@Override
 	public List<Article> getArticlesByReviewer(String username) {
 		return articleDao.getArticlesByReviewer(username);
+	}
+
+	@Override
+	public Integer getCountArticlesByFilter(ArticleFilter filter) {
+		return articleDao.getCountArticlesByFilter(filter).intValue();
+	}
+
+	@Override
+	public List<Article> getArticlesByFilter(ArticleFilter filter) {
+		return articleDao.getArticlesByFilter(filter);
 	}
 
 }

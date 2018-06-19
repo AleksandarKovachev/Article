@@ -3,6 +3,7 @@ package com.tu.article.dao;
 import java.util.List;
 
 import com.tu.article.entity.Article;
+import com.tu.article.filter.ArticleFilter;
 
 /**
  * Defining DAO for working with {@link Article} entity
@@ -45,5 +46,23 @@ public interface ArticleDao {
 	 * @return {@link List} of {@link Article}
 	 */
 	public List<Article> getArticlesByReviewer(String username);
+
+	/**
+	 * Get count of {@link Article} by {@link ArticleFilter} filter
+	 *
+	 * @param filter
+	 *            {@link ArticleFilter}
+	 * @return count
+	 */
+	public Number getCountArticlesByFilter(ArticleFilter filter);
+
+	/**
+	 * Get {@link List} of {@link Article} by {@link ArticleFilter} filter
+	 *
+	 * @param filter
+	 *            {@link ArticleFilter}
+	 * @return {@link List} of {@link Article}
+	 */
+	public List<Article> getArticlesByFilter(ArticleFilter filter);
 
 }

@@ -21,4 +21,11 @@ public class DaoConstants {
 
 	public static final String REVIEW = "review";
 
+	// Article
+	public static final String TITLE = "title";
+	public static final String ABSTRACT = "abstract";
+	public static final String ARTICLE_CATEGORY_ID = "articleCategoryId";
+	public static final String AUTHOR_NAME = "authorName";
+	public static final String KEYWORDS = "keywords";
+
 }

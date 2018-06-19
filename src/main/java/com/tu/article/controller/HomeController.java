@@ -1,5 +1,7 @@
 package com.tu.article.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,9 +16,11 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tu.article.constant.Constant;
 import com.tu.article.controller.constant.RequestAttribute;
 import com.tu.article.controller.constant.ViewConstant;
+import com.tu.article.entity.Article;
 import com.tu.article.entity.constant.SystemParameter;
 import com.tu.article.filter.ArticleFilter;
 import com.tu.article.service.ArticleCategoryService;
+import com.tu.article.service.ArticleService;
 import com.tu.article.service.ParameterService;
 
 /**
@@ -34,6 +38,9 @@ public class HomeController {
 	@Autowired
 	private ArticleCategoryService articleCategoryService;
 
+	@Autowired
+	private ArticleService articleService;
+
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
@@ -48,10 +55,17 @@ public class HomeController {
 			@ModelAttribute(RequestAttribute.FILTER) ArticleFilter filter) {
 		ModelMap modelMap = new ModelMap();
 		addModelMapAttributes(modelMap, filter);
+		Integer totalCount = articleService.getCountArticlesByFilter(filter);
+		filter.setTotalCount(totalCount);
+		List<Article> articles = articleService.getArticlesByFilter(filter);
+		modelMap.addAttribute(RequestAttribute.ARTICLES, articles);
 		return new ModelAndView(ViewConstant.INDEX, modelMap);
 	}
 
 	private void addModelMapAttributes(ModelMap modelMap, ArticleFilter filter) {
+		if (filter.getCategoryId() == null) {
+			filter.setCategoryId(Constant.INVALID_SELECTION);
+		}
 		modelMap.addAttribute(RequestAttribute.FILTER, filter);
 		String url = parameterService.getParameterByName(SystemParameter.APACHE_SERVER_ADDRESS.name()).getValue()
 				+ parameterService.getParameterByName(SystemParameter.APACHE_IMAGES_PATH.name()).getValue();

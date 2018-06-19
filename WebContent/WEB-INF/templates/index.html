@@ -9,14 +9,14 @@
 <body>
 	<section layout:fragment="body">
 
-		<div class="parallax-container" style="height: 750px;">
+		<div class="parallax-container" style="height: 850px;">
 			<div class="section no-pad-bot">
 				<div class="container">
 					<h1 class="header center white-text text-lighten-2"
 						th:text="#{menu.articles}"></h1>
 
 					<div class="container"
-						style="background-color: #000000; border: 1px solid black; opacity: 0.6; filter: alpha(opacity = 60); padding: 20px;">
+						style="background-color: #000000; border: 1px solid black; opacity: 0.7; filter: alpha(opacity = 70); padding: 20px;">
 						<form th:action="@{/}" method="POST" class="col s12"
 							th:object="${filter}">
 
@@ -45,11 +45,16 @@
 									<i class="material-icons prefix">filter_list</i> <select
 										id="categoriesSelect" class="white-text"
 										th:field="*{categoryId}">
-										<option value="-1" disabled selected th:text="#{choose}" />
+										<option value="-1" selected th:text="#{choose.all}" />
 										<option th:each="category : ${articleCategories}"
 											th:value="${category.id}" th:text="${category.name}"></option>
 									</select> <label th:text="#{article.category}"></label>
 								</div>
+							</div>
+
+							<div class='row'>
+								<div class="chips chips-autocomplete col s12" id="keywordsChips"></div>
+								<input type="hidden" id="keywords" th:field="*{keywords}">
 							</div>
 
 							<div class="row">
@@ -68,7 +73,8 @@
 							<div class="row">
 								<button type='submit'
 									class='col s12 btn btn-large waves-effect indigo'
-									th:text="#{search.button}"></button>
+									th:text="#{search.button}"
+									onclick="JavaScript:return searchArticles();"></button>
 							</div>
 						</form>
 					</div>
@@ -80,7 +86,15 @@
 			</div>
 		</div>
 
-		<script type="text/javascript">
+		<div class="container white">
+			<div class="section">
+				<div id="result" th:insert="ajax/articlesList :: articles"></div>
+			</div>
+		</div>
+
+		<script th:inline="javascript">
+			var contextPath = $("meta[name='ctx']").attr("content");
+
 			$(document).ready(function() {
 				function init() {
 					$('input[type=text]').addClass("white-text");
@@ -88,6 +102,64 @@
 
 				setTimeout(init, 100);
 			});
+			
+			$(document).ready(function() {
+				$.ajax({
+					type : 'GET',
+					url : contextPath + "/keywords",
+					success : function(response) {
+						var keywords = response;
+						var dataKeywords = {};
+						for (var i = 0; i < keywords.length; i++) {
+							dataKeywords[keywords[i].name] = keywords[i].flag;
+						}
+
+						var my_data = {};
+						$.each(keywords, function(index, value) {
+							my_data[index] = value.name;
+						});
+
+						var myConvertedData = {};
+						$.each(my_data, function(index, value) {
+						  	myConvertedData[value] = null;
+						});
+
+						var listOfChips = $('#keywords').val();
+						var tagsMeta = [];
+						var tagsArray = listOfChips.split(',');
+						$.each(tagsArray, function(index, value) {
+							if(value) {
+								tagsMeta.push({tag: value});
+							}
+						});
+
+						$('.chips-autocomplete').chips({
+							placeholder: [[#{article.add.keywords}]],
+							secondaryPlaceholder: [[#{article.add.keywords}]],
+							data: tagsMeta,
+							autocompleteOptions: {
+							    data: myConvertedData,
+							    limit: Infinity,
+							    minLength: 1
+						  	}
+						});
+
+						$('input').addClass("white-text");
+					}
+				});
+			});
+
+			function searchArticles() {
+				var keywords = M.Chips.getInstance($('#keywordsChips')).chipsData;
+				var keywordsList = [];
+				
+				$.each(keywords, function(index, value) {
+					keywordsList.push(value.tag);
+				});
+				
+				$('#keywords').val(keywordsList);
+				return true;
+			}
 		</script>
 	</section>
 </body>

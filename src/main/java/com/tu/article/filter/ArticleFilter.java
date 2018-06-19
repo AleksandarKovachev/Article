@@ -1,5 +1,7 @@
 package com.tu.article.filter;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -28,5 +30,7 @@ public class ArticleFilter extends BasePageFilter {
 	private Long categoryId;
 
 	private String authorName;
+
+	private List<String> keywords;
 
 }
