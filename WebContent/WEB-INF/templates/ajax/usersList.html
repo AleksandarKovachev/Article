@@ -5,57 +5,65 @@
 <head></head>
 <body>
 	<div th:fragment="users" id="users">
-		<table class="striped highlight centered responsive-table">
-			<thead>
-				<tr>
-					<th th:text="#{number}"></th>
-					<th th:text="#{user.username}"></th>
-					<th th:text="#{user.email}"></th>
-					<th th:text="#{user.name}"></th>
-					<th th:text="#{user.organization}"></th>
-					<th th:text="#{user.degree}"></th>
-					<th th:text="#{user.isConfirmed}"></th>
-					<th th:text="#{user.role}"></th>
-					<th th:text="#{user.status}"></th>
-					<th th:text="#{action}"></th>
-				</tr>
-			</thead>
-			<tbody>
-				<th:block th:each="user, iteration : ${users}">
-					<tr>
-						<td
-							th:text="${iteration.index + (filter.pageNumber*filter.pageSize)+1}"></td>
-						<td th:text="${user.username}"></td>
-						<td th:text="${user.email}"></td>
-						<td th:text="${user.name}"></td>
-						<td th:text="${user.organization}"></td>
-						<td th:text="${user.degree.name}"></td>
-						<td
-							th:text="${user.isConfirmed == 1} ? #{user.confirmed} : #{user.notConfirmed}"></td>
-						<td width="230px"><select class="materialSelect"
-								th:id="'userRole_' + ${user.id}"
-								th:onchange="'javascript:changeUser(value, \'' + ${user.role.id} + '\' , \'' + ${user.id} + '\', true);'">
-								<option value="-1" disabled selected th:text="#{choose}" />
-								<option th:each="role : ${roles}" th:value="${role.id}"
-									th:text="${role.name}" th:selected="${user.role.id == role.id}"></option>
-							</select></td>
-						<td><select class="materialSelect"
-								th:id="'userStatus_' + ${user.id}"
-								th:onchange="'javascript:changeUser(value, \'' + ${user.status.id} + '\' , \'' + ${user.id} + '\', false);'">
-								<option value="-1" disabled selected th:text="#{choose}" />
-								<option th:each="status : ${statuses}" th:value="${status.id}"
-									th:text="${status.name}"
-									th:selected="${user.status.id == status.id}"></option>
-							</select></td>
-						<td><a th:id="'saveButton_' + ${user.id}"
-							class="waves-effect waves-light btn-small disabled"
-							th:text="#{save.button}"
-							th:onclick="'javascript:updateUser(\'' + ${user.id} + '\');'"></a></td>
-					</tr>
-				</th:block>
-			</tbody>
-		</table>
-
+		<div class="center">
+			<div class="container">
+				<div class="row">
+					<div class="col s12 m12">
+						<table class="striped highlight centered responsive-table">
+							<thead>
+								<tr>
+									<th th:text="#{number}"></th>
+									<th th:text="#{user.username}"></th>
+									<th th:text="#{user.email}"></th>
+									<th th:text="#{user.name}"></th>
+									<th th:text="#{user.organization}"></th>
+									<th th:text="#{user.degree}"></th>
+									<th th:text="#{user.isConfirmed}"></th>
+									<th th:text="#{user.role}"></th>
+									<th th:text="#{user.status}"></th>
+									<th th:text="#{action}"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:each="user, iteration : ${users}">
+									<tr>
+										<td
+											th:text="${iteration.index + (filter.pageNumber*filter.pageSize)+1}"></td>
+										<td th:text="${user.username}"></td>
+										<td th:text="${user.email}"></td>
+										<td th:text="${user.name}"></td>
+										<td th:text="${user.organization}"></td>
+										<td th:text="${user.degree.name}"></td>
+										<td
+											th:text="${user.isConfirmed == 1} ? #{user.confirmed} : #{user.notConfirmed}"></td>
+										<td width="230px"><select class="materialSelect"
+											th:id="'userRole_' + ${user.id}"
+											th:onchange="'javascript:changeUser(value, \'' + ${user.role.id} + '\' , \'' + ${user.id} + '\', true);'">
+												<option value="-1" disabled selected th:text="#{choose}" />
+												<option th:each="role : ${roles}" th:value="${role.id}"
+													th:text="${role.name}"
+													th:selected="${user.role.id == role.id}"></option>
+										</select></td>
+										<td><select class="materialSelect"
+											th:id="'userStatus_' + ${user.id}"
+											th:onchange="'javascript:changeUser(value, \'' + ${user.status.id} + '\' , \'' + ${user.id} + '\', false);'">
+												<option value="-1" disabled selected th:text="#{choose}" />
+												<option th:each="status : ${statuses}"
+													th:value="${status.id}" th:text="${status.name}"
+													th:selected="${user.status.id == status.id}"></option>
+										</select></td>
+										<td><a th:id="'saveButton_' + ${user.id}"
+											class="waves-effect waves-light btn-small disabled"
+											th:text="#{save.button}"
+											th:onclick="'javascript:updateUser(\'' + ${user.id} + '\');'"></a></td>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<div class="center">
 			<ul class="pagination">

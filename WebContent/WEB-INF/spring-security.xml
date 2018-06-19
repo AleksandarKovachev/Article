@@ -14,8 +14,8 @@
 	<context:component-scan base-package="com.tu.article" />
 
 	<security:http auto-config="true" use-expressions="true">
-		<security:form-login login-page="/login" />
 		<security:csrf disabled="true" />
+		<security:form-login login-page="/" authentication-failure-url="/login?error=true" />
 		<security:intercept-url pattern="/" access="permitAll" />
 		<security:intercept-url pattern="/login" access="permitAll" />
 		<security:intercept-url pattern="/register" access="permitAll" />
@@ -24,7 +24,7 @@
 		<security:intercept-url pattern="/users/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<security:intercept-url pattern="/updateUser/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<security:logout logout-success-url="/login?logout=true" invalidate-session="true" delete-cookies="JSESSIONID" />
-		<security:session-management invalid-session-url="/login"></security:session-management>
+		<security:session-management invalid-session-url="/"></security:session-management>
 	</security:http>
 
 	<bean id="userDetailsService" class="com.tu.article.security.UserDetailsServiceImpl" />

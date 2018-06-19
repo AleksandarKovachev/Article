@@ -22,7 +22,7 @@
 								<th th:text="#{article.keywords}"></th>
 								<th th:text="#{article.authors}"></th>
 								<th th:text="#{article.reviewers}"></th>
-								<th th:text="#{article.statuses}"></th>
+								<th th:text="#{article.status}"></th>
 								<th th:text="#{article.file}"></th>
 								<th th:text="#{action}"></th>
 							</tr>
@@ -37,11 +37,11 @@
 									<td><span
 										th:each="keyword, iterator : ${article.keywords}"
 										th:text="!${iterator.last} ? ${keyword.name} + ',': ${keyword.name}"></span></td>
-									<td width="250px"><select class="materialSelect">
+									<td><select class="materialSelect">
 											<option th:each="author : ${article.authors}"
 												th:text="${author.name}"></option>
 									</select></td>
-									<td width="450px"><select multiple class="materialSelect"
+									<td width="350px"><select multiple class="materialSelect"
 										th:id="'articleReviewers_' + ${article.id}"
 										th:onchange="'javascript:changeArticle(\'' + ${article.id} + '\');'">
 											<option value="-1" disabled selected th:text="#{choose}" />
