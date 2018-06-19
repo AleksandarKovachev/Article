@@ -11,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tu.article.constant.Constant;
@@ -60,6 +61,22 @@ public class HomeController {
 		List<Article> articles = articleService.getArticlesByFilter(filter);
 		modelMap.addAttribute(RequestAttribute.ARTICLES, articles);
 		return new ModelAndView(ViewConstant.INDEX, modelMap);
+	}
+
+	@RequestMapping(value = "/articles/getData", method = RequestMethod.POST)
+	public ModelAndView getData(HttpServletRequest request, HttpServletResponse response,
+			@ModelAttribute(RequestAttribute.FILTER) ArticleFilter filter,
+			@RequestParam(RequestAttribute.PAGE_NUMBER) Integer pageNumber,
+			@RequestParam(RequestAttribute.PAGE_SIZE) Integer pageSize,
+			@RequestParam(RequestAttribute.TOTAL_COUNT) Integer totalCount) {
+		ModelMap modelMap = new ModelMap();
+		filter.setPageSize(pageSize);
+		filter.setTotalCount(totalCount);
+		filter.setPageNumber(pageNumber);
+		addModelMapAttributes(modelMap, filter);
+		List<Article> articles = articleService.getArticlesByFilter(filter);
+		modelMap.addAttribute(RequestAttribute.ARTICLES, articles);
+		return new ModelAndView(ViewConstant.ARTICLES_LIST + " :: " + ViewConstant.ARTICLES, modelMap);
 	}
 
 	private void addModelMapAttributes(ModelMap modelMap, ArticleFilter filter) {

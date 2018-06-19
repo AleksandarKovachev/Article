@@ -35,7 +35,7 @@
 								<div class='input-field col s12 white-text'>
 									<i class="material-icons prefix">subtitles</i> <input
 										type='text' class="white-text input-in-box" name='title'
-										id='title' th:field="*{abstractText}" /> <label for='title'
+										id='abstract' th:field="*{abstractText}" /> <label for='title'
 										th:text="#{article.abstract}"></label>
 								</div>
 							</div>
@@ -160,6 +160,36 @@
 				$('#keywords').val(keywordsList);
 				return true;
 			}
+
+			function getData(pageNumber) {
+				var keywords = M.Chips.getInstance($('#keywordsChips')).chipsData;
+				var keywordsList = [];
+				
+				$.each(keywords, function(index, value) {
+					keywordsList.push(value.tag);
+				});
+				
+				$('#keywords').val(keywordsList);
+				
+				$.ajax({
+					type: "POST",
+					url : contextPath + "/articles/getData",
+					data: {
+						"pageNumber" : pageNumber,
+						"pageSize" : $("#pageSize").val(),
+						"totalCount" : $("#totalCount").val(),
+						"title" : $("#title").val(),
+						"abstract" : $("#abstractText").val(),
+						"categoryId" : $("#categoriesSelect").val(),
+						"author" : $("author").val(),
+						keywordsList
+					},
+					success : function(result) {
+						$("#result").html(result);
+					},
+					cache : false
+				});
+			};
 		</script>
 	</section>
 </body>

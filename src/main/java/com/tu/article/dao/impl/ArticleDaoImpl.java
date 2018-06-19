@@ -74,7 +74,7 @@ public class ArticleDaoImpl extends BaseDao implements ArticleDao {
 	@SuppressWarnings("rawtypes")
 	private Query getArticles(ArticleFilter filter, String returnQuery) {
 		StringBuilder hql = new StringBuilder("select " + returnQuery
-				+ " from Article as article join article.authors as author join article.keywords as keyword");
+				+ " from Article as article left join article.authors as author left join article.keywords as keyword");
 
 		if (StringUtils.hasText(filter.getTitle())) {
 			appendWhereClause(hql);

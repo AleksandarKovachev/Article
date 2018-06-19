@@ -30,4 +30,8 @@ public class ViewConstant {
 
 	public static final String INDEX = "index";
 
+	public static final String ARTICLES_LIST = "ajax/articlesList";
+
+	public static final String ARTICLES = "articles";
+
 }
