@@ -34,4 +34,6 @@ public class ViewConstant {
 
 	public static final String ARTICLES = "articles";
 
+	public static final String PREVIEW_ARTICLE = "article/previewArticle";
+
 }

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/MaterializeLayout}">
+<head>
+<title th:text="#{preview.article.header} + ${article.title}"></title>
+</head>
+<body>
+	<section layout:fragment="body">
+		<div class="center">
+			<div class="container">
+
+				<h1 th:text="#{preview.article.header} + ${article.title}"></h1>
+
+				<form th:action="@{/}" method="POST" class="col s12"
+					th:object="${filter}">
+					<input type="hidden" th:value="${title}" th:field="*{title}" />
+					<input type="hidden" th:value="${abstractText}"
+						th:field="*{abstractText}" />
+					<input type="hidden" th:value="${categoryId}"
+						th:field="*{categoryId}" />
+					<input type="hidden" th:value="${authorName}"
+						th:field="*{authorName}" />
+					<input type="hidden" th:value="${keywords}" th:field="*{keywords}" />
+					<input type="hidden" th:value="${pageNumber}"
+						th:field="*{pageNumber}" />
+					<input type="hidden" th:value="${pageSize}" th:field="*{pageSize}" />
+					<input type="hidden" th:value="${totalCount}"
+						th:field="*{totalCount}" />
+					<button type='submit' class="waves-effect waves-light btn-large"
+						th:inline="text">
+						<i class="material-icons left">arrow_back</i>[[#{back.button}]]
+					</button>
+				</form>
+			</div>
+		</div>
+
+	</section>
+</body>
+</html>

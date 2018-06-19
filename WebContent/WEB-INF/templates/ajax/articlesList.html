@@ -33,7 +33,30 @@
 									<option th:each="author : ${article.authors}"
 										th:text="${author.name}"></option>
 							</select></td>
-							<td></td>
+							<td>
+								<form th:action="@{'/article/preview/' + ${article.id}}"
+									method="POST" class="col s12" th:object="${filter}">
+									<input type="hidden" th:value="${title}" th:field="*{title}" />
+									<input type="hidden" th:value="${abstractText}"
+										th:field="*{abstractText}" />
+									<input type="hidden" th:value="${categoryId}"
+										th:field="*{categoryId}" />
+									<input type="hidden" th:value="${authorName}"
+										th:field="*{authorName}" />
+									<input type="hidden" th:value="${keywords}"
+										th:field="*{keywords}" />
+									<input type="hidden" th:value="${pageNumber}"
+										th:field="*{pageNumber}" />
+									<input type="hidden" th:value="${pageSize}"
+										th:field="*{pageSize}" />
+									<input type="hidden" th:value="${totalCount}"
+										th:field="*{totalCount}" />
+									<button type='submit'
+										class="waves-effect waves-light btn-small" th:inline="text">
+										<i class="material-icons left">reorder</i>[[#{article.preview}]]
+									</button>
+								</form>
+							</td>
 						</tr>
 					</th:block>
 				</tbody>
@@ -84,8 +107,8 @@
 
 		</th:block>
 
-		<input type="hidden" id="pageSize" th:value='${filter.pageSize}' /> <input
-			type="hidden" id="totalCount" th:value='${filter.totalCount}' />
+		<input type="hidden" id="pageSize" th:value='${filter.pageSize}' />
+		<input type="hidden" id="totalCount" th:value='${filter.totalCount}' />
 
 		<script type="text/javascript">
 			$(document).ready(function() {

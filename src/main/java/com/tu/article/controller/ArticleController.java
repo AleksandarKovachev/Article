@@ -37,6 +37,7 @@ import com.tu.article.entity.Keyword;
 import com.tu.article.entity.Parameter;
 import com.tu.article.entity.User;
 import com.tu.article.entity.constant.SystemParameter;
+import com.tu.article.filter.ArticleFilter;
 import com.tu.article.form.ArticleForm;
 import com.tu.article.security.UserDetailsImpl;
 import com.tu.article.service.ArticleCategoryService;
@@ -163,6 +164,15 @@ public class ArticleController {
 		modelMap.addAttribute(RequestAttribute.ARTICLE_CATEGORIES, articleCategoryService.getAllArticleCategories());
 		modelMap.addAttribute(RequestAttribute.AUTHORS, userService.getAuthors());
 		return new ModelAndView(ViewConstant.ADD_ARTICLE, modelMap);
+	}
+
+	@RequestMapping(value = "/article/preview/{id}", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView previewArticle(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("id") String id, @ModelAttribute(RequestAttribute.FILTER) ArticleFilter filter) {
+		ModelMap modelMap = new ModelMap();
+		modelMap.addAttribute(RequestAttribute.ARTICLE, articleService.getArticleById(Long.parseLong(id)));
+		modelMap.addAttribute(RequestAttribute.FILTER, filter);
+		return new ModelAndView(ViewConstant.PREVIEW_ARTICLE, modelMap);
 	}
 
 	@RequestMapping(value = "/keywords", method = RequestMethod.GET)
