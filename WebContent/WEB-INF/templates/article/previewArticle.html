@@ -12,6 +12,68 @@
 			<div class="container">
 
 				<h1 th:text="#{preview.article.header} + ${article.title}"></h1>
+			</div>
+			<div class="container">
+				<div class="row">
+					<div class="col s6">
+						<span th:text="#{preview.article.abstract}"></span>
+						<strong th:text="${article.abstractColumn}"></strong>
+					</div>
+
+					<div class="col s6">
+						<span th:text="#{preview.article.file}"></span> <a
+							class="waves-effect waves-light btn-small"
+							th:href="@{${url} + ${article.articleFile.name}}"
+							th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col s6 m6">
+						<table class="highlight centered responsive-table">
+							<thead>
+								<tr>
+									<th><strong th:text="#{preview.article.authors}"></strong></th>
+								</tr>
+							</thead>
+							<tbody>
+								<th:block th:each="author : ${article.authors}">
+									<tr>
+										<td><span th:text="${author.name}"></span></td>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="col s6 m6">
+						<table class="highlight centered responsive-table">
+							<thead>
+								<tr>
+									<th><strong th:text="#{preview.article.reviewer}"></strong></th>
+									<th><strong th:text="#{preview.article.reviewer.status}"></strong></th>
+									<th><strong th:text="#{preview.article.review}"></strong></th>
+								</tr>
+							</thead>
+							<tbody>
+
+								<th:block th:each="reviewer : ${article.articleReviewers}">
+									<tr>
+										<td><span th:text="${reviewer.user.name}"></span></td>
+										<td><span
+											th:text="${(reviewer.review != null && reviewer.review.articleStatus != null) ? reviewer.review.articleStatus.name : ''}"></span></td>
+										<td><th:block
+												th:if="${reviewer.review != null && reviewer.review.reviewFile != null}">
+												<a class="waves-effect waves-light btn-small"
+													th:href="@{${reviewUrl} + ${reviewer.review.reviewFile.name}}"
+													th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a>
+											</th:block></td>
+									</tr>
+								</th:block>
+							</tbody>
+						</table>
+					</div>
+				</div>
 
 				<form th:action="@{/}" method="POST" class="col s12"
 					th:object="${filter}">

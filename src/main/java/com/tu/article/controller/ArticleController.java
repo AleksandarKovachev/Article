@@ -170,6 +170,12 @@ public class ArticleController {
 	public ModelAndView previewArticle(HttpServletRequest request, HttpServletResponse response,
 			@PathVariable("id") String id, @ModelAttribute(RequestAttribute.FILTER) ArticleFilter filter) {
 		ModelMap modelMap = new ModelMap();
+		Parameter apacheServerAddress = parameterService
+				.getParameterByName(SystemParameter.APACHE_SERVER_ADDRESS.name());
+		Parameter articlesPath = parameterService.getParameterByName(SystemParameter.APACHE_ARTICLES_PATH.name());
+		Parameter reviewsPath = parameterService.getParameterByName(SystemParameter.ARTICLE_REVIEWS_PATH.name());
+		modelMap.addAttribute(RequestAttribute.REVIEW_URL, apacheServerAddress.getValue() + reviewsPath.getValue());
+		modelMap.addAttribute(RequestAttribute.URL, apacheServerAddress.getValue() + articlesPath.getValue());
 		modelMap.addAttribute(RequestAttribute.ARTICLE, articleService.getArticleById(Long.parseLong(id)));
 		modelMap.addAttribute(RequestAttribute.FILTER, filter);
 		return new ModelAndView(ViewConstant.PREVIEW_ARTICLE, modelMap);
