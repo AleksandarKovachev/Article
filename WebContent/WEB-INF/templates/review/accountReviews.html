@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{/layout/MaterializeLayout}">
 <head>
 <title th:text="#{review.title}"></title>
@@ -10,7 +11,8 @@
 	<section layout:fragment="body">
 		<div class="center">
 			<div class="container">
-				<th:block th:if="${!articles.empty}">
+				<th:block th:if="${!articles.empty}"
+					th:with="authenticatedUser=${#authentication.name}">
 					<table class="striped highlight centered responsive-table">
 						<thead>
 							<tr>
@@ -21,7 +23,7 @@
 								<th th:text="#{article.keywords}"></th>
 								<th th:text="#{article.authors}"></th>
 								<th th:text="#{article.file}"></th>
-								<th th:text="#{action}"></th>
+								<th th:text="#{action}" th:if="${authenticatedUser == username}"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -41,7 +43,8 @@
 									<td><a class="waves-effect waves-light btn-small"
 										th:href="@{${url} + ${article.articleFile.name}}"
 										th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a></td>
-									<td><a class="waves-effect waves-light btn-small"
+									<td th:if="${authenticatedUser == username}"><a
+										class="waves-effect waves-light btn-small"
 										th:href="@{'/review/add/' + ${article.id}}" th:inline="text"><i
 											class="material-icons left">mode_edit</i>[[#{review.article.button}]]</a></td>
 								</tr>

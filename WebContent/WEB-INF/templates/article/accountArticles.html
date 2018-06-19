@@ -2,9 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{/layout/MaterializeLayout}">
 <head>
-<title th:text="#{menu.articles}"></title>
+<title th:text="#{articles}"></title>
 </head>
 <body>
 	<section layout:fragment="body">
@@ -68,8 +69,8 @@
 		</div>
 
 
-
-		<div class="fixed-action-btn" style="bottom: 60px; right: 50px;">
+		<div class="fixed-action-btn" style="bottom: 60px; right: 50px;"
+			sec:authorize="hasAnyRole('ROLE_AUTHOR', 'ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')">
 			<a th:href="@{/article/add/}"
 				class="btn-floating btn-large waves-effect waves-light teal"><i
 				class="material-icons">add</i></a>

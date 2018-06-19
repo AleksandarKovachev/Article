@@ -68,6 +68,7 @@ public class ReviewController {
 	public ModelAndView review(@PathVariable(value = RequestAttribute.USERNAME) String username,
 			HttpServletRequest request, HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
+		modelMap.addAttribute(RequestAttribute.USERNAME, username);
 		Parameter apacheServerAddress = parameterService
 				.getParameterByName(SystemParameter.APACHE_SERVER_ADDRESS.name());
 		Parameter articlesPath = parameterService.getParameterByName(SystemParameter.APACHE_ARTICLES_PATH.name());

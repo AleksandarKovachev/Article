@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{/layout/MaterializeLayout}">
 <head>
 <title th:text="#{account.title}"></title>
@@ -15,11 +16,11 @@
 				<div th:if="${message == null}">
 					<div class="row valign-wrapper">
 						<div class="col s6 m6">
-							<div class="card">
+							<div class="card" th:with="authenticatedUser=${#authentication.name}">
 								<div class="card-image">
 									<img th:src="${image}">
 									<span class="card-title" th:text="${user.username}"></span>
-									<a
+									<a th:if="${authenticatedUser == username}"
 										class="btn-floating halfway-fab waves-effect waves-light red"><i
 										class="material-icons">add</i></a>
 								</div>

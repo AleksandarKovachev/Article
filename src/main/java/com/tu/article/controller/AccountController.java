@@ -26,7 +26,7 @@ import com.tu.article.service.UserService;
 
 /**
  * Controller for working with the user account
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -49,6 +49,7 @@ public class AccountController {
 	public ModelAndView account(@PathVariable(value = RequestAttribute.USERNAME) String username,
 			HttpServletRequest request, HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
+		modelMap.addAttribute(RequestAttribute.USERNAME, username);
 		User user = userService.getActiveUserByUsername(username);
 		if (user == null) {
 			String message = messageSource.getMessage("account.missing.error", null, Locale.getDefault());
