@@ -23,30 +23,41 @@
 								<th th:text="#{article.keywords}"></th>
 								<th th:text="#{article.authors}"></th>
 								<th th:text="#{article.file}"></th>
+								<th th:text="#{article.status}"></th>
+								<th th:text="#{review}"></th>
 								<th th:text="#{action}" th:if="${authenticatedUser == username}"></th>
 							</tr>
 						</thead>
 						<tbody>
-							<th:block th:each="article, iteration : ${articles}">
+							<th:block th:each="articleReview, iteration : ${articles}">
 								<tr>
 									<td th:text="${iteration.index + 1}"></td>
-									<td th:text="${article.title}"></td>
-									<td th:text="${article.abstractColumn}"></td>
-									<td th:text="${article.articleCategory.name}"></td>
+									<td th:text="${articleReview.article.title}"></td>
+									<td th:text="${articleReview.article.abstractColumn}"></td>
+									<td th:text="${articleReview.article.articleCategory.name}"></td>
 									<td><span
-										th:each="keyword, iterator : ${article.keywords}"
+										th:each="keyword, iterator : ${articleReview.article.keywords}"
 										th:text="!${iterator.last} ? ${keyword.name} + ',': ${keyword.name}"></span></td>
 									<td width="250px"><select class="materialSelect">
-											<option th:each="author : ${article.authors}"
+											<option th:each="author : ${articleReview.article.authors}"
 												th:text="${author.name}"></option>
 									</select></td>
 									<td><a class="waves-effect waves-light btn-small"
-										th:href="@{${url} + ${article.articleFile.name}}"
+										th:href="@{${url} + ${articleReview.article.articleFile.name}}"
 										th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a></td>
-									<td th:if="${authenticatedUser == username}"><a
+									<td
+										th:text="${(articleReview.reviewer != null && articleReview.reviewer.review != null) ? articleReview.reviewer.review.articleStatus.name : ''}"></td>
+									<td><th:block
+											th:if="${articleReview.reviewer != null && articleReview.reviewer.review != null}">
+											<a class="waves-effect waves-light btn-small"
+												th:href="@{${reviewUrl} + ${articleReview.reviewer.review.reviewFile.name}}"
+												th:inline="text"><i class="material-icons left">file_download</i>[[#{review}]]</a>
+										</th:block></td>
+									<td
+										th:if="${authenticatedUser == username && articleReview.reviewer.review == null}"><a
 										class="waves-effect waves-light btn-small"
-										th:href="@{'/review/add/' + ${article.id}}" th:inline="text"><i
-											class="material-icons left">mode_edit</i>[[#{review.article.button}]]</a></td>
+										th:href="@{'/review/add/' + ${articleReview.article.id}}"
+										th:inline="text"><i class="material-icons left">mode_edit</i>[[#{review.article.button}]]</a></td>
 								</tr>
 							</th:block>
 						</tbody>

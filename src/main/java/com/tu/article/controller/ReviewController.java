@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,7 @@ import com.tu.article.constant.Constant;
 import com.tu.article.controller.constant.RequestAttribute;
 import com.tu.article.controller.constant.ViewConstant;
 import com.tu.article.entity.Article;
+import com.tu.article.entity.ArticleReviewer;
 import com.tu.article.entity.ArticleStatus;
 import com.tu.article.entity.Parameter;
 import com.tu.article.entity.Review;
@@ -39,6 +41,7 @@ import com.tu.article.service.ArticleStatusService;
 import com.tu.article.service.DatabaseManagerService;
 import com.tu.article.service.ParameterService;
 import com.tu.article.service.ReviewService;
+import com.tu.article.web.dto.ArticleReview;
 
 /**
  * Controller for working with reviews
@@ -73,7 +76,22 @@ public class ReviewController {
 				.getParameterByName(SystemParameter.APACHE_SERVER_ADDRESS.name());
 		Parameter articlesPath = parameterService.getParameterByName(SystemParameter.APACHE_ARTICLES_PATH.name());
 		modelMap.addAttribute(RequestAttribute.URL, apacheServerAddress.getValue() + articlesPath.getValue());
-		modelMap.addAttribute(RequestAttribute.ARTICLES, articleService.getArticlesByReviewer(username));
+		List<Article> articles = articleService.getArticlesByReviewer(username);
+		List<ArticleReview> articleReviews = new ArrayList<>();
+		for (Article article : articles) {
+			ArticleReview articleReview = new ArticleReview();
+			articleReview.setArticle(article);
+			for (ArticleReviewer articleReviewer : article.getArticleReviewers()) {
+				if (articleReviewer.getUser().getUsername().equals(username)) {
+					articleReview.setReviewer(articleReviewer);
+				}
+			}
+			articleReviews.add(articleReview);
+		}
+		modelMap.addAttribute(RequestAttribute.ARTICLES, articleReviews);
+
+		Parameter reviewsPath = parameterService.getParameterByName(SystemParameter.ARTICLE_REVIEWS_PATH.name());
+		modelMap.addAttribute(RequestAttribute.REVIEW_URL, apacheServerAddress.getValue() + reviewsPath.getValue());
 		return new ModelAndView(ViewConstant.ACCOUNT_REVIEWS, modelMap);
 	}
 
@@ -135,11 +153,11 @@ public class ReviewController {
 
 	private void uploadFile(MultipartFile multipartFile, String fileName) throws IOException {
 		Parameter apacheFilesPath = parameterService.getParameterByName(SystemParameter.APACHE_FILES_PATH.name());
-		Parameter apacheArticlesPath = parameterService.getParameterByName(SystemParameter.ARTICLE_REVIEWS_PATH.name());
+		Parameter apacheReviewsPath = parameterService.getParameterByName(SystemParameter.ARTICLE_REVIEWS_PATH.name());
 
 		Path path;
 		byte[] bytes = multipartFile.getBytes();
-		path = Paths.get(apacheFilesPath.getValue() + apacheArticlesPath.getValue() + fileName);
+		path = Paths.get(apacheFilesPath.getValue() + apacheReviewsPath.getValue() + fileName);
 		Files.write(path, bytes);
 	}
 
