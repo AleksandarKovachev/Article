@@ -20,6 +20,8 @@
 						<form th:action="@{/}" method="POST" class="col s12"
 							th:object="${filter}">
 
+							<input type="hidden" id="pageSize" th:field='*{pageSize}' />
+
 							<div class='row'>
 								<div class='input-field col s12 white-text'>
 									<i class="material-icons prefix">title</i> <input type='text'

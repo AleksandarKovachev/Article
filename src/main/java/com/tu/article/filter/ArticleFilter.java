@@ -17,6 +17,10 @@ public class ArticleFilter extends BasePageFilter {
 		super(pageSize);
 	}
 
+	public ArticleFilter() {
+		super(10);
+	}
+
 	private String title;
 
 	private String abstractText;

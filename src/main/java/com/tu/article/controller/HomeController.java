@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tu.article.constant.Constant;
 import com.tu.article.controller.constant.RequestAttribute;
 import com.tu.article.controller.constant.ViewConstant;
 import com.tu.article.entity.constant.SystemParameter;
@@ -37,13 +38,14 @@ public class HomeController {
 	public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
 		ModelMap modelMap = new ModelMap();
 		ArticleFilter filter = new ArticleFilter(10);
+		filter.setCategoryId(Constant.INVALID_SELECTION);
 		addModelMapAttributes(modelMap, filter);
 		return new ModelAndView(ViewConstant.INDEX, modelMap);
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public ModelAndView postHome(HttpServletRequest request, HttpServletResponse response,
-			@ModelAttribute ArticleFilter filter) {
+			@ModelAttribute(RequestAttribute.FILTER) ArticleFilter filter) {
 		ModelMap modelMap = new ModelMap();
 		addModelMapAttributes(modelMap, filter);
 		return new ModelAndView(ViewConstant.INDEX, modelMap);
