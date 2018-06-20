@@ -72,7 +72,7 @@ public class AdminController {
 		filter.setTotalCount(totalCount);
 		filter.setPageNumber(pageNumber);
 		setUserData(modelMap, filter);
-		return new ModelAndView(ViewConstant.USERS_LIST + " :: " + ViewConstant.USERS, modelMap);
+		return new ModelAndView(ViewConstant.USERS_LIST + " :: users", modelMap);
 	}
 
 	@RequestMapping(value = "/updateUser/{id}", method = RequestMethod.POST)
