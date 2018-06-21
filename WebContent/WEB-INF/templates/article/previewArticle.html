@@ -2,6 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 	layout:decorate="~{/layout/MaterializeLayout}">
 <head>
 <title th:text="#{preview.article.header} + ${article.title}"></title>
@@ -15,12 +16,15 @@
 			</div>
 			<div class="container">
 				<div class="row">
-					<div class="col s6">
-						<span th:text="#{preview.article.abstract}"></span>
-						<strong th:text="${article.abstractColumn}"></strong>
+					<div class="col s12">
+						<span th:text="#{preview.article.abstract}"></span> <strong
+							th:text="${article.abstractColumn}"></strong>
 					</div>
+				</div>
 
-					<div class="col s6">
+				<div class="row"
+					sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_AUTHOR', 'ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')">
+					<div class="col s12">
 						<span th:text="#{preview.article.file}"></span> <a
 							class="waves-effect waves-light btn-small"
 							th:href="@{${url} + ${article.articleFile.name}}"
@@ -29,7 +33,7 @@
 				</div>
 
 				<div class="row">
-					<div class="col s6 m6">
+					<div class="col s12">
 						<table class="highlight centered responsive-table">
 							<thead>
 								<tr>
@@ -45,12 +49,16 @@
 							</tbody>
 						</table>
 					</div>
+				</div>
 
-					<div class="col s6 m6">
+				<div class="row"
+					sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_AUTHOR', 'ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')">
+					<div class="col s12">
 						<table class="highlight centered responsive-table">
 							<thead>
 								<tr>
-									<th><strong th:text="#{preview.article.reviewer}"></strong></th>
+									<th sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"><strong
+										th:text="#{preview.article.reviewer}"></strong></th>
 									<th><strong th:text="#{preview.article.reviewer.status}"></strong></th>
 									<th><strong th:text="#{preview.article.review}"></strong></th>
 								</tr>
@@ -59,7 +67,8 @@
 
 								<th:block th:each="reviewer : ${article.articleReviewers}">
 									<tr>
-										<td><span th:text="${reviewer.user.name}"></span></td>
+										<td sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"><span
+											th:text="${reviewer.user.name}"></span></td>
 										<td><span
 											th:text="${(reviewer.review != null && reviewer.review.articleStatus != null) ? reviewer.review.articleStatus.name : ''}"></span></td>
 										<td><th:block
