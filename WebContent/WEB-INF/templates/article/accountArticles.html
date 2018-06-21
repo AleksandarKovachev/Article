@@ -22,9 +22,12 @@
 								<th th:text="#{article.category}"></th>
 								<th th:text="#{article.keywords}"></th>
 								<th th:text="#{article.authors}"></th>
-								<th th:text="#{article.reviewers}"></th>
+								<th th:text="#{article.reviewers}"
+									sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"></th>
 								<th th:text="#{article.status}"></th>
-								<th th:text="#{article.file}"></th>
+								<th th:text="#{article.file.name}"></th>
+								<th th:text="#{article.review.file}"
+									sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_AUTHOR', 'ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -41,7 +44,7 @@
 											<option th:each="author : ${article.authors}"
 												th:text="${author.name}"></option>
 									</select></td>
-									<td><th:block
+									<td sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"><th:block
 											th:if="${article.articleReviewers != null && !article.articleReviewers.empty}">
 											<select class="materialSelect"
 												th:onchange="'javascript:changeReviewer(this.value, \'' + ${article.id} + '\',);'">
@@ -50,11 +53,33 @@
 													th:value="${reviewer.review != null ? reviewer.review.articleStatus.name : ''}"></option>
 											</select>
 										</th:block></td>
-									<td><span th:id="'reviewerStatus_' + ${article.id}"></span>
-									</td>
+									<td><th:block
+											sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')">
+											<span th:id="'reviewerStatus_' + ${article.id}"></span>
+										</th:block> <th:block
+											sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_AUTHOR', 'ROLE_REVIEWER')">
+											<select class="materialSelect">
+												<option th:each="reviewer : ${article.articleReviewers}"
+													th:text="${reviewer.review != null ? reviewer.review.articleStatus.name : ''}"></option>
+											</select>
+										</th:block> <th:block sec:authorize="isAnonymous()">
+											<select class="materialSelect">
+												<option th:each="reviewer : ${article.articleReviewers}"
+													th:text="${reviewer.review != null ? reviewer.review.articleStatus.name : ''}"></option>
+											</select>
+										</th:block></td>
 									<td><a class="waves-effect waves-light btn"
 										th:href="@{${url} + ${article.articleFile.name}}"
 										th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a></td>
+									<td
+										sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_AUTHOR', 'ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')">
+										<th:block th:each="reviewer : ${article.articleReviewers}"
+											th:if="${reviewer.review != null}" )>
+											<a class="waves-effect waves-light btn"
+												th:href="@{${reviewUrl} + ${reviewer.review.reviewFile.name}}"
+												th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a>
+										</th:block>
+									</td>
 								</tr>
 							</th:block>
 						</tbody>

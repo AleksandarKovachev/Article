@@ -85,7 +85,8 @@ public class ArticleController {
 				.getParameterByName(SystemParameter.APACHE_SERVER_ADDRESS.name());
 		Parameter articlesPath = parameterService.getParameterByName(SystemParameter.APACHE_ARTICLES_PATH.name());
 		modelMap.addAttribute(RequestAttribute.URL, apacheServerAddress.getValue() + articlesPath.getValue());
-
+		Parameter reviewsPath = parameterService.getParameterByName(SystemParameter.ARTICLE_REVIEWS_PATH.name());
+		modelMap.addAttribute(RequestAttribute.REVIEW_URL, apacheServerAddress.getValue() + reviewsPath.getValue());
 		return new ModelAndView(ViewConstant.ACCOUNT_ARTICLES, modelMap);
 	}
 
