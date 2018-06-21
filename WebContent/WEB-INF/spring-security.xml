@@ -25,6 +25,7 @@
 		<security:intercept-url pattern="/articleReviewers/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<security:intercept-url pattern="/setArticleReviewers/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<security:intercept-url pattern="/updateUser/**" access="hasRole('ROLE_ADMINISTRATOR')" />
+		<security:intercept-url pattern="/review/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/review/add/**" access="hasAnyRole('ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')" />
 		<security:intercept-url pattern="/article/add/**" access="hasAnyRole('ROLE_AUTHOR', 'ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')" />
 		<security:logout logout-success-url="/login?logout=true" invalidate-session="true" delete-cookies="JSESSIONID" />
