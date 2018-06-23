@@ -24,11 +24,12 @@ public class ReviewDaoImpl extends BaseDao implements ReviewDao {
 
 	@Override
 	@SuppressWarnings("rawtypes")
-	public void updateArticleReviewer(Long userId, Review review) {
-		Query query = getSession()
-				.createQuery("update ArticleReviewer as ar set ar.review = :review where ar.user.id = :userId");
+	public void updateArticleReviewer(Long userId, Review review, Long articleId) {
+		Query query = getSession().createQuery(
+				"update ArticleReviewer as ar set ar.review = :review where ar.user.id = :userId and ar.articleId = :articleId");
 		query.setParameter(DaoConstants.REVIEW, review);
 		query.setParameter(DaoConstants.USER_ID, userId);
+		query.setParameter(DaoConstants.ARTICLE_ID, articleId);
 		query.executeUpdate();
 	}
 

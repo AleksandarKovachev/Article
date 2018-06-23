@@ -70,7 +70,8 @@
 										th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a></td>
 									<td><a
 										class="waves-effect waves-light btn-small modal-trigger"
-										th:href="'#' + ${article.id}" th:text="#{edit.button}"></a>
+										th:href="'#' + ${article.id}" th:inline="text"><i
+											class="material-icons left">mode_edit</i>[[#{edit.button}]]</a>
 
 										<div th:id="${article.id}" class="modal">
 											<div class="modal-content">

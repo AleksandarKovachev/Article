@@ -22,12 +22,9 @@
 								<th th:text="#{article.category}"></th>
 								<th th:text="#{article.keywords}"></th>
 								<th th:text="#{article.authors}"></th>
-								<th th:text="#{article.reviewers}"
-									sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"></th>
-								<th th:text="#{article.status}"></th>
+								<th th:text="#{article.reviewers}"></th>
 								<th th:text="#{article.file.name}"></th>
-								<th th:text="#{article.review.file}"
-									sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_AUTHOR', 'ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')"></th>
+								<th th:text="#{action}" sec:authorize="isAuthenticated()"></th>
 							</tr>
 						</thead>
 						<tbody>
@@ -44,42 +41,45 @@
 											<option th:each="author : ${article.authors}"
 												th:text="${author.name}"></option>
 									</select></td>
-									<td sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"><th:block
-											th:if="${article.articleReviewers != null && !article.articleReviewers.empty}">
-											<select class="materialSelect"
-												th:onchange="'javascript:changeReviewer(this.value, \'' + ${article.id} + '\',);'">
-												<option th:each="reviewer : ${article.articleReviewers}"
-													th:text="${reviewer.user.name}"
-													th:value="${reviewer.review != null ? reviewer.review.articleStatus.name : ''}"></option>
-											</select>
-										</th:block></td>
-									<td><th:block
-											sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')">
-											<span th:id="'reviewerStatus_' + ${article.id}"></span>
-										</th:block> <th:block
-											sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_AUTHOR', 'ROLE_REVIEWER')">
-											<select class="materialSelect">
-												<option th:each="reviewer : ${article.articleReviewers}"
-													th:text="${reviewer.review != null ? reviewer.review.articleStatus.name : ''}"></option>
-											</select>
-										</th:block> <th:block sec:authorize="isAnonymous()">
-											<select class="materialSelect">
-												<option th:each="reviewer : ${article.articleReviewers}"
-													th:text="${reviewer.review != null ? reviewer.review.articleStatus.name : ''}"></option>
-											</select>
-										</th:block></td>
+									<td>
+										<table class="highlight centered responsive-table">
+											<thead>
+												<tr>
+													<th th:text="#{preview.article.reviewer}"
+														sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"></th>
+													<th th:text="#{preview.article.reviewer.status}"></th>
+													<th th:text="#{preview.article.review}"
+														sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_AUTHOR', 'ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<th:block
+													th:each="reviewer, iteration : ${article.articleReviewers}">
+													<tr>
+														<td th:text="${reviewer.user.name}"
+															sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"></td>
+														<td
+															th:text="${reviewer.review != null ? reviewer.review.articleStatus.name : ''}"></td>
+														<td
+															sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_AUTHOR', 'ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')"><a
+															th:if="${reviewer.review != null}"
+															class="waves-effect waves-light btn-small"
+															th:href="@{${reviewUrl} + ${reviewer.review.reviewFile.name}}"
+															th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a></td>
+													</tr>
+												</th:block>
+											</tbody>
+										</table>
+									</td>
 									<td><a class="waves-effect waves-light btn"
 										th:href="@{${url} + ${article.articleFile.name}}"
 										th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a></td>
-									<td
-										sec:authorize="hasAnyRole('ROLE_USER', 'ROLE_AUTHOR', 'ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')">
-										<th:block th:each="reviewer : ${article.articleReviewers}"
-											th:if="${reviewer.review != null}" )>
+									<td sec:authorize="isAuthenticated()"><th:block
+											th:if="${article.articleReviewers == null || #lists.size(article.articleReviewers) == 0 || (article.articleReviewers != null && #lists.size(article.articleReviewers) != 0 && (article.articleReviewers[0].review != null && article.articleReviewers[0].review.articleStatus.id == 3) || (article.articleReviewers[1].review != null && article.articleReviewers[1].review.articleStatus.id == 3))}">
 											<a class="waves-effect waves-light btn"
-												th:href="@{${reviewUrl} + ${reviewer.review.reviewFile.name}}"
-												th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a>
-										</th:block>
-									</td>
+												th:href="@{'/article/edit/' + ${article.id}}"
+												th:inline="text"><i class="material-icons left">mode_edit</i>[[#{edit.button}]]</a>
+										</th:block></td>
 								</tr>
 							</th:block>
 						</tbody>
@@ -105,11 +105,6 @@
 			$(document).ready(function() {
 			  $('.materialSelect').formSelect();
 			});
-
-			function changeReviewer(articleStatus, articleId) {
-				$("#reviewerStatus_" + articleId).text(articleStatus);
-			}
-			
 		</script>
 	</section>
 </body>

@@ -28,4 +28,6 @@ public class DaoConstants {
 	public static final String AUTHOR_NAME = "authorName";
 	public static final String KEYWORDS = "keywords";
 
+	public static final String ARTICLE_ID = "articleId";
+
 }

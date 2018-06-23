@@ -154,7 +154,7 @@ public class ReviewController {
 			review.setStatus(databaseManagerService.getActiveStatus());
 
 			review.setId(databaseManagerService.addObject(review));
-			reviewService.updateArticleReviewer(userDetails.getId(), review);
+			reviewService.updateArticleReviewer(userDetails.getId(), review, Long.parseLong(id));
 		}
 
 		modelMap.addAttribute(RequestAttribute.ARTICLE,

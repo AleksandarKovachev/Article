@@ -52,4 +52,8 @@ public class RequestAttribute {
 
 	public static final String ARTICLE_STATUSES = "articleStatuses";
 
+	public static final String IS_EDIT_ARTICLE = "isEditArticle";
+
+	public static final String ARTICLE_ID = "articleId";
+
 }

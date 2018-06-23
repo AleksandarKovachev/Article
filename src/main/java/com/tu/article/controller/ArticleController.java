@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,6 +35,7 @@ import com.tu.article.controller.constant.ViewConstant;
 import com.tu.article.entity.Article;
 import com.tu.article.entity.ArticleCategory;
 import com.tu.article.entity.ArticleFile;
+import com.tu.article.entity.ArticleReviewer;
 import com.tu.article.entity.Keyword;
 import com.tu.article.entity.Parameter;
 import com.tu.article.entity.User;
@@ -101,6 +104,72 @@ public class ArticleController {
 		modelMap.addAttribute(RequestAttribute.FORM, form);
 		modelMap.addAttribute(RequestAttribute.ARTICLE_CATEGORIES, articleCategoryService.getAllArticleCategories());
 		modelMap.addAttribute(RequestAttribute.AUTHORS, userService.getAuthors());
+		modelMap.addAttribute(RequestAttribute.IS_EDIT_ARTICLE, false);
+		return new ModelAndView(ViewConstant.ADD_ARTICLE, modelMap);
+	}
+
+	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+	@RequestMapping(value = "/article/edit/{id}", method = RequestMethod.GET)
+	public ModelAndView editArticle(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("id") String articleId, @ModelAttribute(RequestAttribute.FORM) ArticleForm form)
+			throws IOException {
+		ModelMap modelMap = new ModelMap();
+
+		Article article = (Article) databaseManagerService.getObjectById(Article.class, Long.parseLong(articleId));
+		UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		isEditableArticle(response, article, userDetails);
+
+		List<Long> authors = new ArrayList<>();
+		for (User author : article.getAuthors()) {
+			authors.add(author.getId());
+		}
+		form.setAuthors(authors);
+		form.setAbstractText(article.getAbstractColumn());
+		form.setTitle(article.getTitle());
+		form.setCategoryId(article.getArticleCategory().getId());
+		List<String> keywords = new ArrayList<>();
+		for (Keyword keyword : article.getKeywords()) {
+			keywords.add(keyword.getName());
+		}
+		form.setKeywords(keywords);
+
+		modelMap.addAttribute(RequestAttribute.FORM, form);
+		modelMap.addAttribute(RequestAttribute.ARTICLE_CATEGORIES, articleCategoryService.getAllArticleCategories());
+		modelMap.addAttribute(RequestAttribute.AUTHORS, userService.getAuthors());
+		modelMap.addAttribute(RequestAttribute.IS_EDIT_ARTICLE, true);
+		modelMap.addAttribute(RequestAttribute.ARTICLE_ID, article.getId());
+		return new ModelAndView(ViewConstant.ADD_ARTICLE, modelMap);
+	}
+
+	@ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+	@RequestMapping(value = "/article/edit/{id}", method = RequestMethod.POST)
+	public ModelAndView editArticlePost(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("id") String articleId, @ModelAttribute(RequestAttribute.FORM) ArticleForm form)
+			throws IOException {
+		ModelMap modelMap = new ModelMap();
+
+		Article article = (Article) databaseManagerService.getObjectById(Article.class, Long.parseLong(articleId));
+		UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
+				.getPrincipal();
+		isEditableArticle(response, article, userDetails);
+
+		form.getAuthors().add(userDetails.getId());
+		List<String> messages = form.validate();
+		if (!CollectionUtils.isEmpty(messages)) {
+			modelMap.addAttribute(RequestAttribute.ERRORS, messages);
+		} else {
+			modelMap.addAttribute(RequestAttribute.MESSAGE, "Успешно редактирана статия");
+			ArticleFile articleFile = createArticleFile(form, userDetails);
+			setArticleData(form, articleFile, article);
+			databaseManagerService.updateObject(article);
+		}
+
+		modelMap.addAttribute(RequestAttribute.FORM, form);
+		modelMap.addAttribute(RequestAttribute.ARTICLE_CATEGORIES, articleCategoryService.getAllArticleCategories());
+		modelMap.addAttribute(RequestAttribute.AUTHORS, userService.getAuthors());
+		modelMap.addAttribute(RequestAttribute.IS_EDIT_ARTICLE, true);
+		modelMap.addAttribute(RequestAttribute.ARTICLE_ID, article.getId());
 		return new ModelAndView(ViewConstant.ADD_ARTICLE, modelMap);
 	}
 
@@ -118,50 +187,18 @@ public class ArticleController {
 			UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication()
 					.getPrincipal();
 
-			SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm");
-			String fileName = userDetails.getUsername() + "_" + simpleDateFormat.format(new Date()) + "_"
-					+ form.getArticleFile().getOriginalFilename();
-
-			uploadFile(form.getArticleFile(), fileName);
-
-			ArticleFile articleFile = new ArticleFile();
-			articleFile.setName(fileName);
-			articleFile.setStatus(databaseManagerService.getActiveStatus());
-			articleFile.setId(databaseManagerService.addObject(articleFile));
+			ArticleFile articleFile = createArticleFile(form, userDetails);
 
 			Article article = new Article();
-			article.setTitle(form.getTitle());
-			article.setAbstractColumn(form.getAbstractText());
-			article.setArticleCategory((ArticleCategory) databaseManagerService.getObjectById(ArticleCategory.class,
-					form.getCategoryId()));
 			article.setCreateDate(new Date());
 			article.setUserId(userDetails.getId());
-			article.setArticleFile(articleFile);
-			article.setStatus(databaseManagerService.getInactiveStatus());
-
-			Set<Keyword> keywords = new LinkedHashSet<>();
-			for (String name : form.getKeywords()) {
-				Keyword keyword = keywordService.getKeywordByName(name);
-				if (keyword == null) {
-					keyword = new Keyword();
-					keyword.setName(name);
-					databaseManagerService.addObject(keyword);
-				}
-				keywords.add(keyword);
-			}
-			article.setKeywords(keywords);
-
-			Set<User> authors = new LinkedHashSet<>();
-			for (Long id : form.getAuthors()) {
-				User user = (User) databaseManagerService.getObjectById(User.class, id);
-				authors.add(user);
-			}
-			article.setAuthors(authors);
+			setArticleData(form, articleFile, article);
 
 			databaseManagerService.addObject(article);
 		}
 
 		modelMap.addAttribute(RequestAttribute.FORM, form);
+		modelMap.addAttribute(RequestAttribute.IS_EDIT_ARTICLE, false);
 		modelMap.addAttribute(RequestAttribute.ARTICLE_CATEGORIES, articleCategoryService.getAllArticleCategories());
 		modelMap.addAttribute(RequestAttribute.AUTHORS, userService.getAuthors());
 		return new ModelAndView(ViewConstant.ADD_ARTICLE, modelMap);
@@ -195,6 +232,77 @@ public class ArticleController {
 		byte[] bytes = multipartFile.getBytes();
 		path = Paths.get(apacheFilesPath.getValue() + apacheArticlesPath.getValue() + fileName);
 		Files.write(path, bytes);
+	}
+
+	private void isEditableArticle(HttpServletResponse response, Article article, UserDetailsImpl userDetails)
+			throws IOException {
+		boolean isAuthor = false;
+		for (User user : article.getAuthors()) {
+			if (user.getId().equals(userDetails.getId())) {
+				isAuthor = true;
+			}
+		}
+
+		if (!isAuthor) {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+		}
+
+		boolean isEditable = false;
+		if (!CollectionUtils.isEmpty(article.getArticleReviewers())) {
+			for (ArticleReviewer articleReviewer : article.getArticleReviewers()) {
+				if (articleReviewer.getReview() != null
+						&& articleReviewer.getReview().getArticleStatus().getId().equals(3L)) {
+					isEditable = true;
+				}
+			}
+		} else {
+			isEditable = true;
+		}
+		if (!isEditable) {
+			response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+		}
+	}
+
+	private ArticleFile createArticleFile(ArticleForm form, UserDetailsImpl userDetails) throws IOException {
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm");
+		String fileName = userDetails.getUsername() + "_" + simpleDateFormat.format(new Date()) + "_"
+				+ form.getArticleFile().getOriginalFilename();
+
+		uploadFile(form.getArticleFile(), fileName);
+
+		ArticleFile articleFile = new ArticleFile();
+		articleFile.setName(fileName);
+		articleFile.setStatus(databaseManagerService.getActiveStatus());
+		articleFile.setId(databaseManagerService.addObject(articleFile));
+		return articleFile;
+	}
+
+	private void setArticleData(ArticleForm form, ArticleFile articleFile, Article article) {
+		article.setTitle(form.getTitle());
+		article.setAbstractColumn(form.getAbstractText());
+		article.setArticleCategory(
+				(ArticleCategory) databaseManagerService.getObjectById(ArticleCategory.class, form.getCategoryId()));
+		article.setArticleFile(articleFile);
+		article.setStatus(databaseManagerService.getInactiveStatus());
+
+		Set<Keyword> keywords = new LinkedHashSet<>();
+		for (String name : form.getKeywords()) {
+			Keyword keyword = keywordService.getKeywordByName(name);
+			if (keyword == null) {
+				keyword = new Keyword();
+				keyword.setName(name);
+				databaseManagerService.addObject(keyword);
+			}
+			keywords.add(keyword);
+		}
+		article.setKeywords(keywords);
+
+		Set<User> authors = new LinkedHashSet<>();
+		for (Long id : form.getAuthors()) {
+			User user = (User) databaseManagerService.getObjectById(User.class, id);
+			authors.add(user);
+		}
+		article.setAuthors(authors);
 	}
 
 }
