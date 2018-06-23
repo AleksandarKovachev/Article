@@ -56,4 +56,9 @@ public class DatabaseManagerServiceImpl implements DatabaseManagerService {
 		databaseManagerDao.updateObject(entity);
 	}
 
+	@Override
+	public Status getInactiveStatus() {
+		return databaseManagerDao.getInactiveStatus();
+	}
+
 }

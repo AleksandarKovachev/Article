@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/MaterializeLayout}">
+<head>
+<title th:text="#{articles}"></title>
+</head>
+<body>
+	<section layout:fragment="body">
+
+		<div class="center">
+			<div class="container">
+				<th:block th:if="${!articles.empty}">
+					<table class="highlight centered responsive-table">
+						<thead>
+							<tr>
+								<th th:text="#{number}"></th>
+								<th th:text="#{article.title}"></th>
+								<th th:text="#{article.abstract}"></th>
+								<th th:text="#{article.category}"></th>
+								<th th:text="#{article.keywords}"></th>
+								<th th:text="#{article.authors}"></th>
+								<th th:text="#{article.reviewers}"></th>
+								<th th:text="#{article.file}"></th>
+								<th th:text="#{action}">
+							</tr>
+						</thead>
+						<tbody>
+							<th:block th:each="article, iteration : ${articles}">
+								<tr th:id="'row_' + ${article.id}">
+									<td th:text="${iteration.index + 1}"></td>
+									<td th:text="${article.title}"></td>
+									<td th:text="${article.abstractColumn}"></td>
+									<td th:text="${article.articleCategory.name}"></td>
+									<td><span
+										th:each="keyword, iterator : ${article.keywords}"
+										th:text="!${iterator.last} ? ${keyword.name} + ',': ${keyword.name}"></span></td>
+									<td><select class="materialSelect">
+											<option th:each="author : ${article.authors}"
+												th:text="${author.name}"></option>
+									</select></td>
+									<td>
+										<table class="highlight centered responsive-table">
+											<thead>
+												<tr>
+													<th th:text="#{preview.article.reviewer}"></th>
+													<th th:text="#{preview.article.reviewer.status}"></th>
+													<th th:text="#{preview.article.review}"></th>
+												</tr>
+											</thead>
+											<tbody>
+												<th:block
+													th:each="reviewer, iteration : ${article.articleReviewers}">
+													<tr>
+														<td th:text="${reviewer.user.name}"></td>
+														<td
+															th:text="${reviewer.review != null ? reviewer.review.articleStatus.name : ''}"></td>
+														<td><a th:if="${reviewer.review != null}"
+															class="waves-effect waves-light btn-small"
+															th:href="@{${reviewUrl} + ${reviewer.review.reviewFile.name}}"
+															th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a></td>
+													</tr>
+												</th:block>
+											</tbody>
+										</table>
+									</td>
+									<td><a class="waves-effect waves-light btn-small"
+										th:href="@{${url} + ${article.articleFile.name}}"
+										th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a></td>
+									<td><a
+										class="waves-effect waves-light btn-small modal-trigger"
+										th:href="'#' + ${article.id}" th:text="#{edit.button}"></a>
+
+										<div th:id="${article.id}" class="modal">
+											<div class="modal-content">
+												<div class="row">
+													<div class="col s2">
+														<label th:text="#{article.status}"></label>
+													</div>
+													<div class="col s6">
+														<select class="materialSelect"
+															th:id="'articleStatus_' + ${article.id}"
+															th:onchange="'javascript:changeArticleStatus(value, \'' + ${article.status.id} + '\', \'' + ${article.id} + '\');'">
+															<option value="-1" disabled selected th:text="#{choose}" />
+															<option th:each="status : ${statuses}"
+																th:value="${status.id}" th:text="${status.name}"
+																th:selected="${article.status.id == status.id}"></option>
+														</select>
+													</div>
+
+													<div class="col s4">
+														<a th:id="'saveArticleStatus_' + ${article.id}"
+															class="waves-effect waves-light btn-small disabled"
+															th:text="#{save.button}"
+															th:onclick="'javascript:updateArticleStatus(\'' + ${article.id} + '\');'"></a>
+													</div>
+												</div>
+
+												<div class="row" th:id="'reviewerRow_' + ${article.id}"
+													th:if="${#lists.size(article.articleReviewers) <= 2}">
+													<div class="col s2">
+														<label th:text="#{preview.article.reviewer}"></label>
+													</div>
+													<div class="col s6">
+														<select class="materialSelect"
+															th:id="'articleReviewer_' + ${article.id}"
+															th:onchange="'javascript:changeArticleReviewer(\'' + ${article.id} + '\');'">
+															<option value="-1" disabled selected th:text="#{choose}" />
+															<option th:each="reviewer : ${reviewers}"
+																th:value="${reviewer.id}" th:text="${reviewer.name}"
+																th:disabled="${article.articleReviewers[0].user.id == reviewer.id || article.articleReviewers[1].user.id == reviewer.id || (#lists.size(article.articleReviewers) == 3 && article.articleReviewers[2].user.id == reviewer.id)}"></option>
+														</select>
+													</div>
+
+													<div class="col s4">
+														<a th:id="'saveArticleReviewer_' + ${article.id}"
+															class="waves-effect waves-light btn-small disabled"
+															th:text="#{save.button}"
+															th:onclick="'javascript:addArticleReviewer(\'' + ${article.id} + '\');'"></a>
+													</div>
+												</div>
+											</div>
+											<div class="modal-footer">
+												<a href="#!"
+													class="modal-close waves-effect waves-red btn-flat"
+													th:text="#{close.button}"></a>
+											</div>
+										</div></td>
+							</th:block>
+						</tbody>
+					</table>
+				</th:block>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			var contextPath = $("meta[name='ctx']").attr("content");
+			
+			function changeArticleStatus(changeValue, originalValue, articleId) {
+				if(changeValue != originalValue) {
+					$("#saveArticleStatus_" + articleId).removeClass("disabled");
+				} else {
+					$("#saveArticleStatus_" + articleId).addClass("disabled");
+				}
+			}
+
+			function changeArticleReviewer(articleId) {
+				$("#saveArticleReviewer_" + articleId).removeClass("disabled");
+			}
+
+			function updateArticleStatus(articleId) {
+				var articleStatus = $("#articleStatus_" + articleId).val();
+
+				$.ajax({
+					url : contextPath + "/updateArticleStatus/" + articleId,
+					type: "POST",
+					data: {
+						"articleStatus" : articleStatus
+					},
+					success : function(result) {
+						if(result) {
+							M.toast({html: 'Успешно променяне на статус на статия.', classes: 'rounded'});
+						} else {
+							M.toast({html: 'Възникна проблем променянето на статуса на статия.', classes: 'rounded'});
+						}
+						$("#saveArticleStatus_" + articleId).addClass("disabled");
+
+						$('#row_' + articleId).remove();
+					},
+					error : function(resul) {
+						M.toast({html: 'Възникна проблем променянето на статуса на статия.', classes: 'rounded'});
+						$("#saveArticleStatus_" + articleId).addClass("disabled");
+					}
+				});
+			}
+
+			function addArticleReviewer(articleId) {
+				var articleReviewer = $("#articleReviewer_" + articleId).val();
+
+				$.ajax({
+					url : contextPath + "/addArticleReviewer/" + articleId,
+					type: "POST",
+					data: {
+						'articleReviewer' : articleReviewer
+					},
+					success : function(result) {
+						if(result) {
+							M.toast({html: 'Успешно задаване рецензент на статия.', classes: 'rounded'});
+						} else {
+							M.toast({html: 'Възникна проблем със задаването рецензент на статия.', classes: 'rounded'});
+						}
+						$("#saveArticleReviewer_" + articleId).addClass("disabled");
+						$("#reviewerRow_" + articleId).remove();
+					},
+					error : function(resul) {
+						M.toast({html: 'Възникна проблем със задаванет рецензенти на статия.', classes: 'rounded'});
+						$("#saveArticleReviewer_" + articleId).addClass("disabled");
+					}
+				});
+			}
+
+		</script>
+	</section>
+</body>
+</html>

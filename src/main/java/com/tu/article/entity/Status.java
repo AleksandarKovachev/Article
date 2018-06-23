@@ -13,7 +13,7 @@ import lombok.Data;
 
 /**
  * Entity representation for status table.
- * 
+ *
  * @author aleksandar.kovachev
  *
  */
@@ -23,7 +23,7 @@ import lombok.Data;
 public class Status {
 
 	public static final Long ACTIVE_STATUS = 1L;
-	public static final Long INACTIVE_STATUS = 2L;
+	public static final Long INACTIVE_STATUS = 0L;
 
 	@Id
 	@Column(name = EntityConstants.ID)

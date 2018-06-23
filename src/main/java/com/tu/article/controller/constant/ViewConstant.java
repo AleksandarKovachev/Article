@@ -26,6 +26,8 @@ public class ViewConstant {
 
 	public static final String ARTICLE_REVIEWERS = "admin/articleReviewers";
 
+	public static final String ADMIN_ARTICLES = "admin/articles";
+
 	public static final String ADD_REVIEW = "review/addReview";
 
 	public static final String INDEX = "index";

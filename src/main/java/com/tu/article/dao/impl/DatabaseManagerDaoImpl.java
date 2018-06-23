@@ -51,4 +51,9 @@ public class DatabaseManagerDaoImpl extends BaseDao implements DatabaseManagerDa
 		return query.list();
 	}
 
+	@Override
+	public Status getInactiveStatus() {
+		return getSession().get(Status.class, Status.INACTIVE_STATUS);
+	}
+
 }

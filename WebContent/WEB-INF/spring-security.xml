@@ -22,8 +22,11 @@
 		<security:intercept-url pattern="/resources/**" access="permitAll" />
 		<security:intercept-url pattern="/images/**" access="permitAll" />
 		<security:intercept-url pattern="/users/**" access="hasRole('ROLE_ADMINISTRATOR')" />
+		<security:intercept-url pattern="/articles/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<security:intercept-url pattern="/articleReviewers/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<security:intercept-url pattern="/setArticleReviewers/**" access="hasRole('ROLE_ADMINISTRATOR')" />
+		<security:intercept-url pattern="/updateArticleStatus/**" access="hasRole('ROLE_ADMINISTRATOR')" />
+		<security:intercept-url pattern="/addArticleReviewer/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<security:intercept-url pattern="/updateUser/**" access="hasRole('ROLE_ADMINISTRATOR')" />
 		<security:intercept-url pattern="/review/**" access="isAuthenticated()" />
 		<security:intercept-url pattern="/review/add/**" access="hasAnyRole('ROLE_REVIEWER', 'ROLE_ADMINISTRATOR')" />

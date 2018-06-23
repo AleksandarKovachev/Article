@@ -12,6 +12,7 @@ import com.tu.article.dao.ArticleDao;
 import com.tu.article.dao.BaseDao;
 import com.tu.article.dao.constant.DaoConstants;
 import com.tu.article.entity.Article;
+import com.tu.article.entity.Status;
 import com.tu.article.filter.ArticleFilter;
 
 /**
@@ -131,6 +132,15 @@ public class ArticleDaoImpl extends BaseDao implements ArticleDao {
 		} else {
 			hql.append(" and ");
 		}
+	}
+
+	@Override
+	public List<Article> getInactiveArticles() {
+		Query<Article> query = getSession().createQuery(
+				"select article from Article as article join article.articleReviewers as reviewers join reviewers.review where article.status.id = :status",
+				Article.class);
+		query.setParameter(DaoConstants.STATUS, Status.INACTIVE_STATUS);
+		return query.list();
 	}
 
 }

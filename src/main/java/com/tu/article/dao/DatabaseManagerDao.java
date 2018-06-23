@@ -41,6 +41,13 @@ public interface DatabaseManagerDao {
 	public Status getActiveStatus();
 
 	/**
+	 * Returns the inactive {@link Status}
+	 *
+	 * @return inactive {@link Status}
+	 */
+	public Status getInactiveStatus();
+
+	/**
 	 * Get all statuses
 	 *
 	 * @return {@link List} of {@link Status}

@@ -137,7 +137,7 @@ public class ArticleController {
 			article.setCreateDate(new Date());
 			article.setUserId(userDetails.getId());
 			article.setArticleFile(articleFile);
-			article.setStatus(databaseManagerService.getActiveStatus());
+			article.setStatus(databaseManagerService.getInactiveStatus());
 
 			Set<Keyword> keywords = new LinkedHashSet<>();
 			for (String name : form.getKeywords()) {

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +25,7 @@ import com.tu.article.controller.constant.ViewConstant;
 import com.tu.article.entity.Article;
 import com.tu.article.entity.ArticleReviewer;
 import com.tu.article.entity.Parameter;
+import com.tu.article.entity.Status;
 import com.tu.article.entity.User;
 import com.tu.article.entity.constant.SystemParameter;
 import com.tu.article.filter.BasePageFilter;
@@ -128,6 +130,70 @@ public class AdminController {
 		article.setArticleReviewers(articleReviewers);
 		databaseManager.updateObject(article);
 		return true;
+	}
+
+	@RequestMapping(value = "/updateArticleStatus/{id}", method = RequestMethod.POST)
+	public @ResponseBody Boolean updateArticleStatus(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("id") String id, @RequestParam("articleStatus") String articleStatus) {
+		if (!StringUtils.hasText(articleStatus)) {
+			return false;
+		}
+		Long statusId;
+		Long articleId;
+		try {
+			statusId = Long.parseLong(articleStatus);
+			articleId = Long.parseLong(id);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+
+		Article article = (Article) databaseManager.getObjectById(Article.class, articleId);
+		article.setStatus((Status) databaseManager.getObjectById(Status.class, statusId));
+		databaseManager.updateObject(article);
+		return true;
+	}
+
+	@RequestMapping(value = "/addArticleReviewer/{id}", method = RequestMethod.POST)
+	public @ResponseBody Boolean addArticleReviewer(HttpServletRequest request, HttpServletResponse response,
+			@PathVariable("id") String id, @RequestParam("articleReviewer") String articleReviewer) {
+		if (!StringUtils.hasText(articleReviewer)) {
+			return false;
+		}
+		Long reviewerId;
+		Long articleId;
+		try {
+			reviewerId = Long.parseLong(articleReviewer);
+			articleId = Long.parseLong(id);
+		} catch (NumberFormatException e) {
+			return false;
+		}
+
+		Article article = (Article) databaseManager.getObjectById(Article.class, articleId);
+		ArticleReviewer articleReview = new ArticleReviewer();
+		User reviewer = (User) databaseManager.getObjectById(User.class, reviewerId);
+		articleReview.setUser(reviewer);
+		articleReview.setArticleId(articleId);
+		Set<ArticleReviewer> articleReviewers = article.getArticleReviewers();
+		articleReviewers.add(articleReview);
+		article.setArticleReviewers(articleReviewers);
+		databaseManager.updateObject(article);
+		return true;
+	}
+
+	@RequestMapping(value = "/articles", method = RequestMethod.GET)
+	public ModelAndView articles(HttpServletRequest request, HttpServletResponse response) {
+		ModelMap modelMap = new ModelMap();
+		Parameter apacheServerAddress = parameterService
+				.getParameterByName(SystemParameter.APACHE_SERVER_ADDRESS.name());
+		Parameter articlesPath = parameterService.getParameterByName(SystemParameter.APACHE_ARTICLES_PATH.name());
+		Parameter reviewsPath = parameterService.getParameterByName(SystemParameter.ARTICLE_REVIEWS_PATH.name());
+		modelMap.addAttribute(RequestAttribute.URL, apacheServerAddress.getValue() + articlesPath.getValue());
+		modelMap.addAttribute(RequestAttribute.REVIEW_URL, apacheServerAddress.getValue() + reviewsPath.getValue());
+		modelMap.addAttribute(RequestAttribute.STATUSES, databaseManager.getAllStatuses());
+		List<Article> articles = articleService.getInactiveArticles();
+		modelMap.addAttribute(RequestAttribute.ARTICLES, articles);
+		modelMap.addAttribute(RequestAttribute.REVIEWERS, userService.getReviewers());
+		return new ModelAndView(ViewConstant.ADMIN_ARTICLES, modelMap);
 	}
 
 	private void setUserData(ModelMap modelMap, BasePageFilter filter) {

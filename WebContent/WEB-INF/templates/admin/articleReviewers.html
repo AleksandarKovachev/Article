@@ -22,7 +22,6 @@
 								<th th:text="#{article.keywords}"></th>
 								<th th:text="#{article.authors}"></th>
 								<th th:text="#{article.reviewers}"></th>
-								<th th:text="#{article.status}"></th>
 								<th th:text="#{article.file}"></th>
 								<th th:text="#{action}"></th>
 							</tr>
@@ -48,13 +47,6 @@
 											<option th:each="reviewer : ${reviewers}"
 												th:text="${reviewer.name}" th:value="${reviewer.id}"></option>
 									</select></td>
-									<td><th:block
-											th:if="${article.articleReviewers != null && !article.articleReviewers.empty}">
-											<select class="materialSelect">
-												<option th:each="reviewer : ${article.articleReviewers}"
-													th:text="${reviewer.review.articleStatus.name}"></option>
-											</select>
-										</th:block></td>
 									<td><a class="waves-effect waves-light btn-small"
 										th:href="@{${url} + ${article.articleFile.name}}"
 										th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a></td>
@@ -91,7 +83,7 @@
 				};
 	
 				function updateArticle(articleId) {
-					var articleReviewers = $("#articleReviewers_" + articleId).val()
+					var articleReviewers = $("#articleReviewers_" + articleId).val();
 					
 					$.ajax({
 						url : contextPath + "/setArticleReviewers/" + articleId,

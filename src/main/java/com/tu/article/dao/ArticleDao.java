@@ -65,4 +65,11 @@ public interface ArticleDao {
 	 */
 	public List<Article> getArticlesByFilter(ArticleFilter filter);
 
+	/**
+	 * Get {@link List} of {@link Article} with inactive status
+	 *
+	 * @return {@link List} of {@link Article}
+	 */
+	public List<Article> getInactiveArticles();
+
 }

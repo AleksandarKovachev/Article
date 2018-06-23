@@ -55,4 +55,9 @@ public class ArticleServciceImpl implements ArticleService {
 		return articleDao.getArticlesByFilter(filter);
 	}
 
+	@Override
+	public List<Article> getInactiveArticles() {
+		return articleDao.getInactiveArticles();
+	}
+
 }
