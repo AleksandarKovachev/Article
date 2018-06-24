@@ -75,35 +75,30 @@ public class ArticleDaoImpl extends BaseDao implements ArticleDao {
 	@SuppressWarnings("rawtypes")
 	private Query getArticles(ArticleFilter filter, String returnQuery) {
 		StringBuilder hql = new StringBuilder("select " + returnQuery
-				+ " from Article as article left join article.authors as author left join article.keywords as keyword");
+				+ " from Article as article left join article.authors as author left join article.keywords as keyword where article.status.id = :status ");
 
 		if (StringUtils.hasText(filter.getTitle())) {
-			appendWhereClause(hql);
-			hql.append("lower(article.title) like :title ");
+			hql.append("and lower(article.title) like :title ");
 		}
 
 		if (StringUtils.hasText(filter.getAbstractText())) {
-			appendWhereClause(hql);
-			hql.append("lower(article.abstractColumn) like :abstract ");
+			hql.append("and lower(article.abstractColumn) like :abstract ");
 		}
 
 		if (filter.getCategoryId() != null && !filter.getCategoryId().equals(Constant.INVALID_SELECTION)) {
-			appendWhereClause(hql);
-			hql.append("article.articleCategory.id = :articleCategoryId ");
+			hql.append("and article.articleCategory.id = :articleCategoryId ");
 		}
 
 		if (!CollectionUtils.isEmpty(filter.getKeywords())) {
-			appendWhereClause(hql);
-			hql.append("lower(keyword.name) in :keywords ");
+			hql.append("and lower(keyword.name) in :keywords ");
 		}
 
 		if (StringUtils.hasText(filter.getAuthorName())) {
-			appendWhereClause(hql);
-			hql.append("lower(author.name) like :authorName ");
+			hql.append("and lower(author.name) like :authorName ");
 		}
 
 		Query query = getSession().createQuery(hql.toString());
-
+		query.setParameter(DaoConstants.STATUS, Status.ACTIVE_STATUS);
 		if (StringUtils.hasText(filter.getTitle())) {
 			query.setParameter(DaoConstants.TITLE, "%" + filter.getTitle().toLowerCase() + "%");
 		}
@@ -124,14 +119,6 @@ public class ArticleDaoImpl extends BaseDao implements ArticleDao {
 			query.setParameter(DaoConstants.AUTHOR_NAME, "%" + filter.getAuthorName().toLowerCase() + "%");
 		}
 		return query;
-	}
-
-	private void appendWhereClause(StringBuilder hql) {
-		if (!hql.toString().contains("where")) {
-			hql.append(" where ");
-		} else {
-			hql.append(" and ");
-		}
 	}
 
 	@Override
