@@ -80,7 +80,7 @@
 					<div class="row">
 						<button type='submit'
 							class='col s12 btn btn-large waves-effect indigo'
-							th:text="#{edit.button}"
+							th:text="${isEditArticle} ? #{edit.button} : #{article.add.button}"
 							onclick="JavaScript:return submitArticle();"></button>
 					</div>
 				</form>
