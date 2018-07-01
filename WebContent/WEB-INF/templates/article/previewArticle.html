@@ -73,17 +73,29 @@
 							</thead>
 							<tbody>
 
-								<th:block th:each="reviewer : ${article.articleReviewers}">
+								<th:block th:each="reviewer : ${article.articleReviewers}"
+									th:with="authenticatedUser=${#authentication.name}">
 									<tr>
 										<td sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"><span
 											th:text="${reviewer.user.name}"></span></td>
 										<td><span
 											th:text="${(reviewer.review != null && reviewer.review.articleStatus != null) ? reviewer.review.articleStatus.name : ''}"></span></td>
-										<td><th:block
-												th:if="${reviewer.review != null && reviewer.review.reviewFile != null}">
-												<a class="waves-effect waves-light btn-small"
-													th:href="@{${reviewUrl} + ${reviewer.review.reviewFile.name}}"
-													th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a>
+										<td><th:block th:switch="${authenticatedUser}">
+												<th:block th:each="author : ${article.authors}">
+													<th:block th:case="${author.username}"
+														th:if="${reviewer.review != null && reviewer.review.reviewFile != null}">
+														<a class="waves-effect waves-light btn-small"
+															th:href="@{${reviewUrl} + ${reviewer.review.reviewFile.name}}"
+															th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a>
+													</th:block>
+													<th:block th:case="*"
+														sec:authorize="hasAuthority('ROLE_ADMINISTRATOR')"
+														th:if="${reviewer.review != null && reviewer.review.reviewFile != null}">
+														<a class="waves-effect waves-light btn-small"
+															th:href="@{${reviewUrl} + ${reviewer.review.reviewFile.name}}"
+															th:inline="text"><i class="material-icons left">file_download</i>[[#{article.file.download}]]</a>
+													</th:block>
+												</th:block>
 											</th:block></td>
 									</tr>
 								</th:block>
